@@ -285,75 +285,71 @@ class HomepageSerializer(serializers.ModelSerializer):
         instance.nationality = validated_data.get('nationality', instance.nationality)
         instance.newborn_check = validated_data.get('newborn_check', instance.newborn_check)
         instance.newborn_birth_weight = validated_data.get('newborn_birth_weight', instance.newborn_birth_weight)
-        # "nationality",
-        # "newborn_check",
-        # "newborn_birth_weight",
-        # "newborn_admit_weight",
-        # "birthplace",
-        # "parent_birthplace",
-        # "ethnicity",
-        # "id_type",
-        # "id_num",
-        # "id_card_num",
-        # "passport_num",
-        # "officer_num",
-        # "profession",
-        # "marriage_stat",
-        # "present_addr1",
-        # "present_addr2",
-        # "present_phone",
-        # "present_zip",
-        # "registered_addr1",
-        # "registered_addr2",
-        # "registered_zip",
-        # "work_addr1",
-        # "work_addr2",
-        # "work_phone",
-        # "work_zip",
-        # "contact_name",
-        # "contact_relation",
-        # "contact_other_description",
-        # "contact_addr1",
-        # "contact_addr2",
-        # "contact_phone",
-        # "admit_path",
-        # "admit_time",
-        # "admit_specialty",
-        # "admit_sickroom",
-        # "trans_specialty",
-        # "release_time",
-        # "release_specialty",
-        # "release_sickroom",
-        # "hosp_duration",
-        # "diagnosis",
-        # "disease_code",
-
-        # "od_release",
-        # "od_code",
-        # "od_condition",
-        # "drug_allergy_check",
-        # "drug_allergy",
-        # "necropsy_check",
-        # "blood_group",
-        # "rh",
-        # "director",
-        # "chief",
-        # "physician_ic",
-        # "resident",
-        # "nurse_ic",
-        # "refresher",
-        # "trainee",
-        # "coder",
-        # "record_quality",
-        # "qc_doctor",
-        # "qc_nurse",
-        # "qc_date",
-        # "release_type",
-        # "accept_hosp_2",
-        # "accept_hosp_3",
-        # "cont_hosp_check",
-        # "cont_hosp_plan",
-        # "head_injury_check",
+        instance.newborn_admit_weight = validated_data.get('newborn_admit_weight', instance.newborn_admit_weight)
+        instance.birthplace = validated_data.get('birthplace', instance.birthplace)
+        instance.parent_birthplace = validated_data.get('parent_birthplace', instance.parent_birthplace)
+        instance.ethnicity = validated_data.get('ethnicity', instance.ethnicity)
+        instance.id_type = validated_data.get('id_type', instance.id_type)
+        instance.id_num = validated_data.get('id_num', instance.id_num)
+        instance.id_card_num = validated_data.get('id_card_num', instance.id_card_num)
+        instance.passport_num = validated_data.get('passport_num', instance.passport_num)
+        instance.officer_num = validated_data.get('officer_num', instance.officer_num)
+        instance.profession = validated_data.get('profession', instance.profession)
+        instance.marriage_stat = validated_data.get('marriage_stat', instance.marriage_stat)
+        instance.present_addr1 = validated_data.get('present_addr1', instance.present_addr1)
+        instance.present_addr2 = validated_data.get('present_addr2', instance.present_addr2)
+        instance.present_phone = validated_data.get('present_phone', instance.present_phone)
+        instance.present_zip = validated_data.get('present_zip', instance.present_zip)
+        instance.registered_addr1 = validated_data.get('registered_addr1', instance.registered_addr1)
+        instance.registered_addr2 = validated_data.get('registered_addr2', instance.registered_addr2)
+        instance.registered_zip = validated_data.get('registered_zip', instance.registered_zip)
+        instance.work_addr1 = validated_data.get('work_addr1', instance.work_addr1)
+        instance.work_addr2 = validated_data.get('work_addr2', instance.work_addr2)
+        instance.work_phone = validated_data.get('work_phone', instance.work_phone)
+        instance.work_zip = validated_data.get('work_zip', instance.work_zip)
+        instance.contact_name = validated_data.get('contact_name', instance.contact_name)
+        instance.contact_relation = validated_data.get('contact_relation', instance.contact_relation)
+        instance.contact_other_description = validated_data.get('contact_other_description', instance.contact_other_description)
+        instance.contact_addr1 = validated_data.get('contact_addr1', instance.contact_addr1)
+        instance.contact_addr2 = validated_data.get('contact_addr2', instance.contact_addr2)
+        instance.contact_phone = validated_data.get('contact_phone', instance.contact_phone)
+        instance.admit_path = validated_data.get('admit_path', instance.admit_path)
+        instance.admit_time = validated_data.get('admit_time', instance.admit_time)
+        instance.admit_specialty = validated_data.get('admit_specialty', instance.admit_specialty)
+        instance.admit_sickroom = validated_data.get('admit_sickroom', instance.admit_sickroom)
+        instance.trans_specialty = validated_data.get('trans_specialty', instance.trans_specialty)
+        instance.release_time = validated_data.get('release_time', instance.release_time)
+        instance.release_specialty = validated_data.get('release_specialty', instance.release_specialty)
+        instance.release_sickroom = validated_data.get('release_sickroom', instance.release_sickroom)
+        instance.hosp_duration = validated_data.get('hosp_duration', instance.hosp_duration)
+        instance.diagnosis = validated_data.get('diagnosis', instance.diagnosis)
+        instance.disease_code = validated_data.get('disease_code', instance.disease_code)
+        instance.od_release = validated_data.get('od_release', instance.od_release)
+        instance.od_code = validated_data.get('od_code', instance.od_code)
+        instance.od_condition = validated_data.get('od_condition', instance.od_condition)
+        instance.drug_allergy_check = validated_data.get('drug_allergy_check', instance.drug_allergy_check)
+        instance.drug_allergy = validated_data.get('drug_allergy', instance.drug_allergy)
+        instance.necropsy_check = validated_data.get('necropsy_check', instance.necropsy_check)
+        instance.blood_group = validated_data.get('blood_group', instance.blood_group)
+        instance.rh = validated_data.get('rh', instance.rh)
+        instance.director = validated_data.get('director', instance.director)
+        instance.chief = validated_data.get('chief', instance.chief)
+        instance.physician_ic = validated_data.get('physician_ic', instance.physician_ic)
+        instance.resident = validated_data.get('resident', instance.resident)
+        instance.nurse_ic = validated_data.get('nurse_ic', instance.nurse_ic)
+        instance.refresher = validated_data.get('refresher', instance.refresher)
+        instance.trainee = validated_data.get('trainee', instance.trainee)
+        instance.coder = validated_data.get('coder', instance.coder)
+        instance.record_quality = validated_data.get('record_quality', instance.record_quality)
+        instance.qc_doctor = validated_data.get('qc_doctor', instance.qc_doctor)
+        instance.qc_nurse = validated_data.get('qc_nurse', instance.qc_nurse)
+        instance.qc_date = validated_data.get('qc_date', instance.qc_date)
+        instance.release_type = validated_data.get('release_type', instance.release_type)
+        instance.accept_hosp_2 = validated_data.get('accept_hosp_2', instance.accept_hosp_2)
+        instance.accept_hosp_3 = validated_data.get('accept_hosp_3', instance.accept_hosp_3)
+        instance.cont_hosp_check = validated_data.get('cont_hosp_check', instance.cont_hosp_check)
+        instance.cont_hosp_plan = validated_data.get('cont_hosp_plan', instance.cont_hosp_plan)
+        instance.head_injury_check = validated_data.get('head_injury_check', instance.head_injury_check)
         
         main_diag_data = validated_data.pop('main_diag')
         print('new main_diag_data:',main_diag_data)
