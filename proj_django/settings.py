@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'djoser',
 
     'homepage',
-
+    'standard',
     # database
     # 'django_clickhouse',
 ]
