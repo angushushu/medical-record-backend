@@ -1,5 +1,12 @@
 from django.db import models
 
+class UploadModel(models.Model):
+    file = models.FileField(upload_to='uploads/')
+
+    class Meta:
+        db_table = 'files'
+        ordering = ['-id']
+
 # 科别一级目录
 class Specialty1(models.Model):
     value = models.CharField(max_length=32, default='', blank=True, primary_key=True)

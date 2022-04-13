@@ -1,7 +1,14 @@
 from dataclasses import field
 from pyexpat import model
 from rest_framework import serializers
-from .models import Specialty1, Specialty2, Specialty3
+from .models import Specialty1, Specialty2, Specialty3, UploadModel
+
+class UploadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UploadModel
+        fields = '__all__'
+    # def create(self, validated_data):
+    #     print('hello')
 
 class Specialty3Serializer(serializers.ModelSerializer):
     class Meta:

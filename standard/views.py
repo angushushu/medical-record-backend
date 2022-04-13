@@ -1,16 +1,70 @@
+from email import message
 from hashlib import new
+import os
 from turtle import home
+from xml.dom import minidom
 from django.http import Http404
 
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import ModelViewSet
+from django.conf import settings
+import xml.etree.ElementTree as ET
 
-from .models import Specialty1, Specialty2#, Specialty3
-from .serializers import Specialty1Serializer, Specialty2Serializer, Specialty3Serializer
+from .models import Specialty1, Specialty2, UploadModel#, Specialty3
+from .serializers import UploadSerializer, Specialty1Serializer, Specialty2Serializer, Specialty3Serializer
 
 from django.db.models import Q # database查询
+
+import json
+import xmltodict
+
+class UploadViewSet(ModelViewSet):
+    queryset = UploadModel.objects.all()
+    # serializer_class = UploadSerializer
+    # def list(self, request):
+    #     return Response("GET API")
+    def xml_to_json(xml_str):
+        xml_parse=xmltodict.parse(xml_str)
+        json_str=json.dumps(xml_parse, indent=1)
+        return json_str
+    def create(self, request):
+        print('UploadViewSet.create()')
+        print('request:',request)
+        print('request.data:',request.data)
+        serializer_class = UploadSerializer(data=request.data)
+        print('validation:', serializer_class.is_valid())
+        if(serializer_class.is_valid()):
+            serializer_class.save()
+        file_uploaded = request.FILES.get('file')
+        print('file:',file_uploaded)
+        content_type = file_uploaded.content_type
+        print("POST API: 你一上传了一个{}文件".format(content_type))
+
+        file_dir = str(settings.MEDIA_ROOT)+'\\uploads\\'+str(file_uploaded)
+        print(file_dir)
+        try:
+            file = open(file_dir, 'r')
+            data = file.read()
+            print('data', data)
+        finally:
+            if file:
+                file.close()
+        # xmldoc = minidom.parse(file_dir)
+        # print('xmldoc:',xmldoc)
+        xml_str = xmltodict.parse(file_dir)
+        print('xml文本:', xml_str)
+        json_str=json.dumps(xml_str, indent=1)
+        print('json文本:', json_str)
+        
+        response = "POST API: 你一上传了一个{}文件".format(content_type)
+
+        # 砖码并录入
+
+        return Response(response)
 
 @api_view(['POST'])
 def postSpecialty1(request):

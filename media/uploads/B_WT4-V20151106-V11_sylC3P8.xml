@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--
+	附加说明：
+			1、该接口数据文件为示例文件，所有数据均为虚拟数据；
+			2、所有节点的 description 属性值仅仅用于说明该节点的业务含义，实际应用中不需要；
+			3、各个节点的数据类型、指标代码和填报规则详见 Excel 格式接口标准；
+			4、XML数据接口文件格式的正确性可以通过 WT4-2012.XSD 进行验证；
+			5、为空的数据项不应存在空节点，如：<AAA09></AAA09> 或 </AAA09> 均为错误结构；
+			6、GBK 字符集编码的国标为：国家标准号为：GB13000-90。
+			   注：GBK 并非国家正式标准，只是国家技术监督局标准化司、电子工业部科技与质量监督司发布的“技术规范指导性文件”。虽然 GBK 收录了所有 Unicode 1.1 及 GB 13000.1-93 之中的汉字，但是编码方式与 Unicode 1.1 及 GB 13000.1-93 不同。仅仅是 GB 2312 到 GB 13000.1-93 之间的过渡方案。
+-->
+<CASES description="所有病案">
+	<Z description="填报信息">
+		<ZA description="机构信息">
+			<ZA01C description="行政区划代码《指标》">110105</ZA01C>
+			<ZA02C description="组织机构代码">40000000X</ZA02C>
+			<ZA03 description="机构名称">XXXXX医院</ZA03>
+			<ZA04 description="单位负责人">XXX</ZA04>
+		</ZA>
+		<ZB description="填报信息">
+			<ZB01C description="报表代码">B_WT4-2012</ZB01C>
+			<ZB02 description="数据年份">2013</ZB02>
+			<ZB03 description="数据月份">1</ZB03>
+			<ZB04 description="填报人">XXX</ZB04>
+			<ZB05 description="填报人联系电话">88888888</ZB05>
+			<ZB06 description="填报日期">2013-01-01 00:59:59</ZB06>
+			<ZB07 description="记录数">1</ZB07>
+			<ZB08 description="邮箱">XXXX@hitb.com.cn</ZB08>
+			<ZB09 description="手机">13141278888</ZB09>
+		</ZB>
+	</Z>
+    <CASE description="病案">
+        <A description="病案首页">
+			<AA description="患者基本情况">
+				<AAA description="患者信息">
+					<AAA01 description="姓名">张三</AAA01>
+					<AAA02C description="性别代码《指标》">1</AAA02C>
+					<AAA03 description="出生日期">1982-02-28</AAA03>
+					<AAA04 description="年龄(岁)">28</AAA04>
+					<AAA05C description="国籍代码《指标》">1</AAA05C>
+					<AAA40 description="年龄不足1周岁天数">1</AAA40>
+					<AAA42 description="新生儿入院体重（克）">3500</AAA42>
+					<AAA06C description="民族代码《指标》">1</AAA06C>
+					<AAA07 description="身份证号">23060219681005488X</AAA07>
+					<AAA08C description="婚姻状况代码《指标》">2</AAA08C>
+					<AAA09 description="出生地省（区、市）">山东省</AAA09>
+					<AAA10 description="出生地市">济南市</AAA10>
+					<AAA11 description="出生地县">历下区</AAA11>
+					<AAA43 description="籍贯省（区、市）">山东省</AAA43>
+					<AAA44 description="籍贯市">济南市</AAA44>
+					<AAA45 description="户籍省（区、市）">山东省</AAA45>
+					<AAA46 description="户籍市">济南市</AAA46>
+					<AAA47 description="户籍县">历下区</AAA47>
+					<AAA12 description="户籍详细地址">山东省济南市历下区</AAA12>
+					<AAA13C description="户籍地址区县编码《指标》">370000</AAA13C>
+					<AAA33C description="户籍街道乡镇代码《指标》">110101001010</AAA33C>
+					<AAA14C description="户籍地址邮政编码">163311</AAA14C>
+					<AAA15 description="现住址详细地址（居住半年以上）">北京市东城区和平里大街</AAA15>
+					<AAA48 description="现住址省（区、市）（居住半年以上）">北京市</AAA48>
+					<AAA49 description="现住址市">北京市</AAA49>
+					<AAA50 description="现住址县">东城区</AAA50>
+					<AAA16C description="现住址区县编码（居住半年以上）《指标》">110101</AAA16C>
+					<AAA36C description="现住址街道乡镇代码（居住半年以上）《指标》">110101004009</AAA36C>
+					<AAA51 description="现住址电话">01080725810</AAA51>
+					<AAA17C description="现住址邮政编码（居住半年以上）">163311</AAA17C>
+					<AAA18C description="职业代码《指标》">11</AAA18C>
+					<AAA19 description="工作单位及地址">北京市海淀区上地东路1号联想大厦</AAA19>
+					<AAA20 description="工作单位电话">829397645</AAA20>
+					<AAA21C description="工作单位邮政编码">163311</AAA21C>
+					<AAA22 description="联系人姓名">张三</AAA22>
+					<AAA23C description="联系人关系代码《指标》">9</AAA23C>
+					<AAA24 description="联系人地址">北京市海淀区上地东路1号联想大厦</AAA24>
+					<AAA25 description="联系人电话">83431231</AAA25>
+					<AAA26C description="医疗付费方式代码《指标》">6</AAA26C>
+					<AAA27 description="医疗保险手册(卡)号（健康卡号）">11111111111</AAA27>
+					<AAA28 description="病案号">2012123101</AAA28>
+					<AAA29 description="住院次数">5</AAA29>
+				</AAA>
+				<AAB description="入院信息">
+					<AAB01 description="入院时间(时)">2013-05-05 10:10:10</AAB01>
+					<AAB02C description="入院科别代码《指标》">69</AAB02C>
+					<AAB03 description="入院病房">309</AAB03>
+					<AAB11C description="入院医院内部科室代码">01</AAB11C>
+					<AAB11N description="入院医院内部科室名称">内科</AAB11N>
+					<AAB06C description="入院途径《指标》">2</AAB06C>
+				</AAB>
+				<AAC description="出院信息">
+					<AAC01 description="出院时间(时)">2013-06-05 10:10:10</AAC01>
+					<AAC02C description="出院科别代码《指标》">69</AAC02C>
+					<AAC03 description="出院病房">201</AAC03>
+					<AAC04 description="实际住院(天)">30</AAC04>
+					<AAC11C description="出院医院内部科室代码">01</AAC11C>
+					<AAC11N description="出院医院内部科室名称">内科</AAC11N>
+				</AAC>
+				<AAD01C description="转经科别代码《指标》">04，69</AAD01C>
+			</AA>
+			<AB description="诊断情况">
+				<ABA description="门急诊诊断信息">
+					<ABA01C description="门(急)诊诊断编码(ICD-10)《指标》">R94.602</ABA01C>
+					<ABA01N description="门(急)诊诊断名称">低T3综合征</ABA01N>
+				</ABA>
+				<ABC description="出院主要诊断信息">
+					<ABC01C description="出院时主要诊断编码(ICD-10)《指标》">R94.201</ABC01C>
+					<ABC01N description="出院主要诊断名称">肺换气量减少</ABC01N>
+					<ABC03C description="入院病情《指标》">1</ABC03C>
+				</ABC>
+				<ABDS description="出院其他诊断集合根节点">
+					<ABD description="出院其他诊断信息">
+						<ABD01C description="出院时其他诊断编码(ICD-10)《指标》">S00.104</ABD01C>
+						<ABD01N description="出院其他诊断名称">眼睑及眼周区挫伤</ABD01N>
+						<ABD03C description="入院病情《指标》">2</ABD03C>
+					</ABD>
+					<ABD description="出院其他诊断信息">
+						<ABD01C description="出院时其他诊断编码(ICD-10)《指标》">S00.102</ABD01C>
+						<ABD01N description="出院其他诊断名称">眼睑挫伤</ABD01N>
+						<ABD03C description="入院病情《指标》">3</ABD03C>
+					</ABD>
+				</ABDS>
+				<ABF description="病理诊断信息">
+					<ABF01C description="病理诊断编码(M码)《指标》">M821005/3</ABF01C>
+					<ABF01N description="病理诊断名称">息肉内的腺癌</ABF01N>
+					<ABF04 description="病理号">01010102</ABF04>
+					<ABF02C description="最高诊断依据代码《指标》">8</ABF02C>
+					<ABF03C description="分化程度编码《指标》">9</ABF03C>
+				</ABF>
+				<ABG description="损伤中毒诊断信息">
+					<ABG01C description="损伤和中毒外部原因编码(ICD-10)《指标》">S00.302</ABG01C>
+					<ABG01N description="损伤和中毒外部原因名称">眼睑及眼周区挫伤</ABG01N>
+				</ABG>
+				<ABH description="肿瘤分期">
+					<ABH01C description="肿瘤分期是否不详《指标》">1</ABH01C>
+					<ABH0201C description="肿瘤分期 T《指标》">1</ABH0201C>
+					<ABH0202C description="肿瘤分期 N《指标》">2</ABH0202C>
+					<ABH0203C description="肿瘤分期 M《指标》">9</ABH0203C>
+					<ABH03C description="0～Ⅳ肿瘤分期《指标》">4</ABH03C>
+				</ABH>
+			</AB>
+			<AC description="手术情况">
+				<ACAS description="手术情况集合根节点">
+					<ACA description="手术信息">
+						<ACA01 description="手术日期时间（开始）">2013-01-05 20:10:10</ACA01>
+						<ACA11 description="手术日期时间（完成）">2013-01-06 02:10:10</ACA11>
+						<ACA02 description="术者（手术操作医师姓名）">王五</ACA02>
+						<ACA03 description="Ⅰ助姓名">赵六</ACA03>
+						<ACA04 description="Ⅱ助姓名">汉启</ACA04>
+						<ACA06C description="麻醉方式代码《指标》">01</ACA06C>
+						<ACA07C description="切口愈合等级代码《指标》">9</ACA07C>
+						<ACA08 description="麻醉医师姓名">屠户</ACA08>
+						<ACA10C description="手术级别代码《指标》">2</ACA10C>
+						<ACA09S description="手术代码集合根节点">
+						    <ACA09 description="术式信息">
+								<ACA0901C description="手术及操作编码(ICD-9-CM3)《指标》">48.41002</ACA0901C>
+								<ACA0901N description="手术及操作名称">索夫氏直肠粘膜下切除术[Soave]</ACA0901N>
+                                <ACA0902C description="是否主要术式《指标》">2</ACA0902C>
+								<ACA0903C description="是否主要手术或操作《指标》">2</ACA0903C>
+							</ACA09>
+							<ACA09 description="术式信息">
+								<ACA0901C description="手术及操作编码(ICD-9-CM3)《指标》">48.76001</ACA0901C>
+								<ACA0901N description="手术及操作名称">直肠固定术</ACA0901N>
+                                <ACA0902C description="是否主要术式《指标》">2</ACA0902C>
+								<ACA0903C description="是否主要手术或操作《指标》">2</ACA0903C>
+							</ACA09>
+						</ACA09S>
+					</ACA>
+					<ACA description="手术信息">
+						<ACA01 description="手术日期时间（开始）">2013-01-05 20:10:10</ACA01>
+						<ACA11 description="手术日期时间（完成）">2013-01-06 02:10:10</ACA11>
+						<ACA02 description="术者（手术操作医师姓名）">李红</ACA02>
+						<ACA03 description="Ⅰ助姓名">程林</ACA03>
+						<ACA04 description="Ⅱ助姓名">马光</ACA04>
+						<ACA06C description="麻醉方式代码《指标》">0104</ACA06C>
+						<ACA07C description="切口愈合等级代码《指标》">8</ACA07C>
+						<ACA08 description="麻醉医师姓名">李峰</ACA08>
+						<ACA10C description="手术级别代码《指标》">3</ACA10C>
+						<ACA09S description="手术代码集合根节点">
+							<ACA09 description="术式信息">
+								<ACA0901C description="手术及操作编码(ICD-9-CM3)《指标》">00.50001</ACA0901C>
+								<ACA0901N description="手术及操作名称">双心室起搏器植入术</ACA0901N>
+                                <ACA0902C description="是否主要术式《指标》">2</ACA0902C>
+								<ACA0903C description="是否主要手术或操作《指标》">2</ACA0903C>
+							</ACA09>
+							<ACA09 description="术式信息">
+								<ACA0901C description="手术及操作编码(ICD-9-CM3)《指标》">00.52002</ACA0901C>
+								<ACA0901N description="手术及操作名称">左心室冠状静脉电极置换术</ACA0901N>
+                                <ACA0902C description="是否主要术式《指标》">2</ACA0902C>
+								<ACA0903C description="是否主要手术或操作《指标》">2</ACA0903C>
+							</ACA09>
+						</ACA09S>
+					</ACA>
+					<ACA description="手术信息">
+						<ACA01 description="手术日期时间（开始）">2013-02-05 20:10:10</ACA01>
+						<ACA11 description="手术日期时间（完成）">2013-02-06 02:10:10</ACA11>
+						<ACA02 description="术者（手术操作医师姓名）">王五</ACA02>
+						<ACA03 description="Ⅰ助姓名">何华</ACA03>
+						<ACA04 description="Ⅱ助姓名">吴玲</ACA04>
+						<ACA06C description="麻醉方式代码《指标》">01</ACA06C>
+						<ACA07C description="切口愈合等级代码《指标》">5</ACA07C>
+						<ACA08 description="麻醉医师姓名">苗语</ACA08>
+						<ACA10C description="手术级别代码《指标》">4</ACA10C>
+						<ACA09S description="手术代码集合根节点">
+							<ACA09 description="术式信息">
+								<ACA0901C description="手术及操作编码(ICD-9-CM3)《指标》">00.01001</ACA0901C>
+								<ACA0901N description="手术及操作名称">头部血管治疗性超声</ACA0901N>
+                                <ACA0902C description="是否主要术式《指标》">2</ACA0902C>
+								<ACA0903C description="是否主要手术或操作《指标》">2</ACA0903C> 
+							</ACA09>
+							<ACA09 description="术式信息">
+								<ACA0901C description="手术及操作编码(ICD-9-CM3)《指标》">00.01002</ACA0901C>
+								<ACA0901N description="手术及操作名称">颈部血管治疗性超声</ACA0901N>
+                                <ACA0902C description="是否主要术式《指标》">2</ACA0902C>
+								<ACA0903C description="是否主要手术或操作《指标》">2</ACA0903C>
+							</ACA09>
+						</ACA09S>
+					</ACA>
+				</ACAS>
+			</AC>
+        <AE description="其他情况">
+                <AEB description="药物过敏信息">
+					<AEB02C description="有无药物过敏《指标》">1</AEB02C>
+					<AEB01 description="过敏药物">抗性药物过敏,其它药物过敏</AEB01>
+				</AEB>
+				<AED description="病案质控信息">
+					<AED01C description="病案质量代码《指标》">3</AED01C>
+					<AED02 description="质控医师姓名">王天一</AED02>
+					<AED03 description="质控护士姓名">张添翼</AED03>
+					<AED04 description="病案质量检查日期">2010-02-05</AED04>
+				</AED>
+				<AEE description="医师信息">
+					<AEE01 description="科主任姓名">王天一</AEE01>
+					<AEE02 description="主(副主)任医师姓名">王天一</AEE02>
+					<AEE03 description="主治医师姓名">王天一</AEE03>
+					<AEE11 description="主诊医师执业证书编码">1101021021021021</AEE11>
+					<AEE09 description="主诊医师姓名（主管医师姓名）">王天一</AEE09>
+					<AEE04 description="住院医师姓名">王天一</AEE04>
+					<AEE05 description="进修医师姓名">王天一</AEE05>
+					<AEE07 description="实习医师姓名">王天一</AEE07>
+					<AEE08 description="编码员姓名">王天一</AEE08>
+					<AEE10 description="责任护士姓名">王天一</AEE10>
+				</AEE>
+				<AEG description="血液信息">
+					<AEG01C description="血型代码《指标》">5</AEG01C>
+					<AEG02C description="Rh代码《指标》">2</AEG02C>
+                    <AEG04 description="红细胞(单位)">100</AEG04>
+					<AEG05 description="血小板(袋)">100</AEG05>
+					<AEG06 description="血浆(ml)">100</AEG06>
+					<AEG07 description="全血(ml)">100</AEG07>
+					<AEG08 description="其它(ml)">100</AEG08>
+				</AEG>
+				<AEJ description="颅脑患者昏迷情况">
+					<AEJ01 description="颅脑损伤患者入院前昏迷时间（天）">2</AEJ01>
+					<AEJ02 description="颅脑损伤患者入院前昏迷时间（小时）">3</AEJ02>
+					<AEJ03 description="颅脑损伤患者入院前昏迷时间（分钟）">10</AEJ03>
+					<AEJ04 description="颅脑损伤患者入院后昏迷时间（天）">1</AEJ04>
+					<AEJ05 description="颅脑损伤患者入院后昏迷时间（小时）">1</AEJ05>
+					<AEJ06 description="颅脑损伤患者入院后昏迷时间（分钟）">50</AEJ06>
+				</AEJ>
+                <AEKS description="重症监护集合根节点">
+				    <AEK description="重症监护情况">
+					    <AEK01C description="重症监护室代码《指标》">03</AEK01C>
+					    <AEK02 description="监护室进入日期时间">2013-02-12 10:20:20</AEK02>
+					    <AEK03 description="监护室退出日期时间">2013-02-20 09:20:20</AEK03>
+				    </AEK>
+				    <AEK description="重症监护情况">
+					    <AEK01C description="重症监护室代码《指标》">01</AEK01C>
+					    <AEK02 description="监护室进入日期时间">2013-05-12 10:20:20</AEK02>
+					    <AEK03 description="监护室退出日期时间">2013-05-20 09:20:20</AEK03>
+				    </AEK>
+                </AEKS>
+				<AEL01 description="呼吸机使用时间(小时)">10</AEL01>
+                <AENS description="新生儿情况集合根节点">
+				    <AEN description="新生儿情况">
+						<AEN01 description="新生儿出生体重(克)">3501</AEN01>
+						<AEN02C description="新生儿出生缺陷诊断编码(ICD-10)《指标》">M21.903</AEN02C>
+						<AEN02N description="新生儿出生缺陷诊断名称">后天性下肢畸形</AEN02N>
+                   </AEN>
+				   <AEN description="新生儿情况">
+						<AEN01 description="新生儿出生体重(克)">3502</AEN01>
+						<AEN02C description="新生儿出生缺陷诊断编码(ICD-10)《指标》">A09.001</AEN02C>
+						<AEN02N description="新生儿出生缺陷诊断名称">肠道感染</AEN02N>
+				   </AEN> 
+                </AENS>
+				<AEM description="离院情况">
+					<AEM01C description="离院方式代码《指标》">2</AEM01C>
+					<AEM02 description="医嘱转院、转社区、卫生院机构名称">北京两广中医医院</AEM02>
+					<AEM03C description="是否有出院31日内再住院计划《指标》">1</AEM03C>
+					<AEM04 description="31日内再住院目的">复查</AEM04>
+				</AEM>
+				<AEI description="其他信息">
+					<AEI01C description="是否尸检代码《指标》">2</AEI01C>
+					<AEI09 description="日常生活能力评定量得分（入院）">50</AEI09>
+                    <AEI10 description="日常生活能力评定量得分（出院）">50</AEI10>
+					<AEI08 description="备注">备注信息</AEI08>
+                </AEI>
+        </AE>
+        <AD description="费用情况">
+                <ADA description="住院费用情况">
+                    <ADA01 description="总费用">4000.00</ADA01>
+                    <ADA0101 description="自付金额">100.00</ADA0101>
+                    <ADA11 description="诊察（诊疗）费">100.00</ADA11>
+                    <ADA21 description="一般检查费">100.00</ADA21>
+                    <ADA22 description="临床物理治疗费">100.00</ADA22>
+                    <ADA23 description="介入治疗费">100.00</ADA23>
+                    <ADA24 description="特殊治疗费">100.00</ADA24>
+                    <ADA25 description="康复治疗费">100.00</ADA25>
+                    <ADA26 description="中医治疗费">100.00</ADA26>
+                    <ADA27 description="一般治疗费">100.00</ADA27>
+                    <ADA28 description="精神治疗费">100.00</ADA28>
+                    <ADA13 description="接生费">100.00</ADA13>
+                    <ADA15 description="麻醉费">100.00</ADA15>
+                    <ADA12 description="手术费">100.00</ADA12>
+                    <ADA29 description="护理治疗费">100.00</ADA29>
+                    <ADA03 description="护理费">100.00</ADA03>
+                    <ADA30 description="核素检查">100.00</ADA30>
+                    <ADA31 description="核素治疗">100.00</ADA31>
+                    <ADA32 description="超声费">100.00</ADA32>
+                    <ADA07 description="放射费">100.00</ADA07>
+                    <ADA08 description="化验费">100.00</ADA08>
+                    <ADA33 description="病理费">100.00</ADA33>
+                    <ADA34 description="监护及辅助呼吸费">100.00</ADA34>
+                    <ADA35 description="治疗用一次性医用材料费">100.00</ADA35>
+                    <ADA36 description="介入用一次性医用材料费">100.00</ADA36>
+                    <ADA37 description="手术用一次性医用材料费">100.00</ADA37>
+                    <ADA38 description="检查用一次性医用材料费">100.00</ADA38>
+                    <ADA02 description="床位费">100.00</ADA02>
+                    <ADA39 description="挂号费">100.00</ADA39>
+                    <ADA09 description="输氧费">100.00</ADA09>
+                    <ADA10 description="输血费">100.00</ADA10>
+                    <ADA04 description="西药费">100.00</ADA04>
+                    <ADA40 description="抗菌药物费">100.00</ADA40>
+                    <ADA41 description="白蛋白类制品费">100.00</ADA41>
+                    <ADA42 description="球蛋白类制品费">100.00</ADA42>
+                    <ADA43 description="凝血因子类制品费">100.00</ADA43>
+                    <ADA44 description="细胞因子类制品费">100.00</ADA44>
+                    <ADA05 description="中成药费">100.00</ADA05>
+                    <ADA06 description="中草药费">100.00</ADA06>
+                    <ADA20 description="其他费用">100.00</ADA20>
+                </ADA>
+        </AD>
+		</A>
+    </CASE>
+</CASES>
