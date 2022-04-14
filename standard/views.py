@@ -1,3 +1,4 @@
+import codecs
 from email import message
 from hashlib import new
 import os
@@ -13,6 +14,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.viewsets import ModelViewSet
 from django.conf import settings
 import xml.etree.ElementTree as ET
+import chardet
 
 from .models import Specialty1, Specialty2, UploadModel#, Specialty3
 from .serializers import UploadSerializer, Specialty1Serializer, Specialty2Serializer, Specialty3Serializer
@@ -46,20 +48,25 @@ class UploadViewSet(ModelViewSet):
 
         file_dir = str(settings.MEDIA_ROOT)+'\\uploads\\'+str(file_uploaded)
         print(file_dir)
-        try:
-            file = open(file_dir, 'r')
-            data = file.read()
-            print('data', data)
-        finally:
-            if file:
-                file.close()
-        # xmldoc = minidom.parse(file_dir)
-        # print('xmldoc:',xmldoc)
-        xml_str = xmltodict.parse(file_dir)
-        print('xml文本:', xml_str)
-        json_str=json.dumps(xml_str, indent=1)
-        print('json文本:', json_str)
         
+        # 取编码并根据编码取值转为dict
+        data_dict = None
+        encoding = None
+        with open(file_dir, 'rb') as f:
+            data = f.read()
+            encoding = chardet.detect(data)['encoding']
+            
+            f.close()
+        with open(file_dir, 'r', encoding=encoding) as f:
+            data = f.read()
+            xml_data = ET.fromstring(data) # 直接处理string
+            xmlstr = ET.tostring(xml_data, encoding='utf-8', method='xml')
+            data_dict = dict(xmltodict.parse(xmlstr))
+            print(data_dict)
+            f.close()
+        print(data_dict[''])
+        
+            
         response = "POST API: 你一上传了一个{}文件".format(content_type)
 
         # 砖码并录入
