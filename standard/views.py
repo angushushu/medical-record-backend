@@ -17,7 +17,7 @@ import xml.etree.ElementTree as ET
 import chardet
 
 from .models import Specialty1, Specialty2, UploadModel#, Specialty3
-from .serializers import UploadSerializer, Specialty1Serializer, Specialty2Serializer, Specialty3Serializer
+from .serializers import SpecialtyStdSerializer, UploadSerializer, Specialty1Serializer, Specialty2Serializer, Specialty3Serializer
 
 from django.db.models import Q # database查询
 
@@ -48,23 +48,23 @@ class UploadViewSet(ModelViewSet):
 
         file_dir = str(settings.MEDIA_ROOT)+'\\uploads\\'+str(file_uploaded)
         print(file_dir)
+        # 打开json文件
         
-        # 取编码并根据编码取值转为dict
-        data_dict = None
-        encoding = None
-        with open(file_dir, 'rb') as f:
-            data = f.read()
-            encoding = chardet.detect(data)['encoding']
-            
-            f.close()
-        with open(file_dir, 'r', encoding=encoding) as f:
-            data = f.read()
-            xml_data = ET.fromstring(data) # 直接处理string
-            xmlstr = ET.tostring(xml_data, encoding='utf-8', method='xml')
-            data_dict = dict(xmltodict.parse(xmlstr))
-            print(data_dict)
-            f.close()
-        print(data_dict[''])
+        # 针对.xml取编码并根据编码取值转为dict
+        # data_dict = None
+        # encoding = None
+        # with open(file_dir, 'rb') as f:
+        #     data = f.read()
+        #     encoding = chardet.detect(data)['encoding']
+        #     f.close()
+        # with open(file_dir, 'r', encoding=encoding) as f:
+        #     data = f.read()
+        #     xml_data = ET.fromstring(data) # 直接处理string
+        #     xmlstr = ET.tostring(xml_data, encoding='utf-8', method='xml')
+        #     data_dict = dict(xmltodict.parse(xmlstr))
+        #     print(data_dict)
+        #     f.close()
+        # print(data_dict[''])
         
             
         response = "POST API: 你一上传了一个{}文件".format(content_type)
@@ -74,13 +74,28 @@ class UploadViewSet(ModelViewSet):
         return Response(response)
 
 @api_view(['POST'])
+def postSpecialtyStd(request):
+    data = request.data['form']
+    print('data:', data)
+    specialtystd_serializer = SpecialtyStdSerializer(data=data)
+    print('validation:', specialtystd_serializer.is_valid())
+    if specialtystd_serializer.is_valid():
+        specialtystd_serializer.save()
+    else:
+        print(specialtystd_serializer.errors)
+    print('giao')
+    return Response({"request.data":request.data})
+
+@api_view(['POST'])
 def postSpecialty1(request):
     data = request.data['form']
     # {
     #     value: '',
     #     label: '',
     #     description: '',
+    #     specialty2
     # }
+    print('data:',data)
     specialty1_serializer = Specialty1Serializer(data=data)
     print('validation:',specialty1_serializer.is_valid())
     if specialty1_serializer.is_valid():
@@ -127,6 +142,7 @@ class StandardList(APIView):
             specialty1_list = Specialty1.objects.all()
             print(specialty1_list)
             print(list(specialty1_list))
+            print(list(specialty1_list)[0].specialty2)
         # paginator = Paginator(homepage_list, 10)
         # if len(homepage_list) != 0:
         #     print(homepage_list[0])
