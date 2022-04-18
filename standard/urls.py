@@ -7,10 +7,11 @@ from standard import views
 #     'post': 'create',
 # })
 router = routers.DefaultRouter()
-router.register(r'upload-standards', views.UploadViewSet, basename='upload')
+router.register(r'upload-std/json-sp', views.UploadJsonViewSet, basename='upload')
 
 urlpatterns = [
-    path('get-standards/', views.StandardList.as_view()),
+    # path('get-standards/', views.StandardList.as_view()),
+    path('get-spstd/', views.ViewSpStd.as_view()),
     path('post-standard/specialty/', views.postSpecialtyStd),
     path('post-standard/specialty1/', views.postSpecialty1),
     path('post-standard/specialty2/<str:sp1_value>/', views.postSpecialty2),

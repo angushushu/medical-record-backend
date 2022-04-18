@@ -3,6 +3,7 @@ from email import message
 from hashlib import new
 import os
 from turtle import home
+from unicodedata import name
 from xml.dom import minidom
 from django.http import Http404
 
@@ -16,7 +17,7 @@ from django.conf import settings
 import xml.etree.ElementTree as ET
 import chardet
 
-from .models import Specialty1, Specialty2, UploadModel#, Specialty3
+from .models import Specialty1, Specialty2, SpecialtyStd, UploadModel#, Specialty3
 from .serializers import SpecialtyStdSerializer, UploadSerializer, Specialty1Serializer, Specialty2Serializer, Specialty3Serializer
 
 from django.db.models import Q # database查询
@@ -24,31 +25,41 @@ from django.db.models import Q # database查询
 import json
 import xmltodict
 
-class UploadViewSet(ModelViewSet):
+class UploadJsonViewSet(ModelViewSet):
     queryset = UploadModel.objects.all()
-    # serializer_class = UploadSerializer
-    # def list(self, request):
-    #     return Response("GET API")
-    def xml_to_json(xml_str):
-        xml_parse=xmltodict.parse(xml_str)
-        json_str=json.dumps(xml_parse, indent=1)
-        return json_str
     def create(self, request):
+        file_dir = None # 文件存储路径
+        json_str = None # 读取的json
+        
         print('UploadViewSet.create()')
-        print('request:',request)
-        print('request.data:',request.data)
-        serializer_class = UploadSerializer(data=request.data)
-        print('validation:', serializer_class.is_valid())
-        if(serializer_class.is_valid()):
-            serializer_class.save()
-        file_uploaded = request.FILES.get('file')
-        print('file:',file_uploaded)
-        content_type = file_uploaded.content_type
-        print("POST API: 你一上传了一个{}文件".format(content_type))
-
-        file_dir = str(settings.MEDIA_ROOT)+'\\uploads\\'+str(file_uploaded)
-        print(file_dir)
+        # print('request:',request)
+        # print('request.data:',request.data)
+        upload_serializer = UploadSerializer(data=request.data)
+        print('validation:', upload_serializer.is_valid())
+        if(upload_serializer.is_valid()):
+            upload = upload_serializer.save()
+        # file_uploaded = request.FILES.get('file')
+        # print('type:', type(file_uploaded))
+        # print('file:',file_uploaded)
+        # content_type = file_uploaded.content_type
+        # print("POST API: 你一上传了一个{}文件".format(content_type))
+        file_name = str(upload.file).split('/')[1]
+        file_dir = str(settings.MEDIA_ROOT)+'\\uploads\\'+file_name
+        print('file_dir:', file_dir)
         # 打开json文件
+        json_str = None
+        with open(file_dir, encoding = 'utf-8') as f:
+            json_str = json.load(f)
+        if json_str:
+            json_str['name'] = file_name
+            # print(json_str)
+            specialtystd_serializer = SpecialtyStdSerializer(data=json_str)
+            print('validation:', specialtystd_serializer.is_valid())
+            if specialtystd_serializer.is_valid():
+                specialtystd_serializer.save()
+            else:
+                print(specialtystd_serializer.errors)
+            print('giao')
         
         # 针对.xml取编码并根据编码取值转为dict
         # data_dict = None
@@ -67,7 +78,7 @@ class UploadViewSet(ModelViewSet):
         # print(data_dict[''])
         
             
-        response = "POST API: 你一上传了一个{}文件".format(content_type)
+        response = "POST API: 你一上传了一个文件:{}".format(file_name)
 
         # 砖码并录入
 
@@ -131,29 +142,12 @@ def postSpecialty3(request, sp2_value, format=None):
 
     return Response({"request.data":request.data})
 
-class StandardList(APIView):
+class ViewSpStd(APIView):
     def get(self, request, format=None):
-        # page = request.GET.get('page')
-        query = request.GET.get('query')
-        if query:
-            specialty1_list = Specialty1.objects.filter(Q(label__icontains=query)|Q(description__icontains=query))
-        else:
-            print('obtaining')
-            specialty1_list = Specialty1.objects.all()
-            print(specialty1_list)
-            print(list(specialty1_list))
-            print(list(specialty1_list)[0].specialty2)
-        # paginator = Paginator(homepage_list, 10)
-        # if len(homepage_list) != 0:
-        #     print(homepage_list[0])
-            # 可再次插入简化过程以降低传输信息量
-        # try:
-        #     homepages = paginator.page(page)
-        # except PageNotAnInteger:
-        #     homepages = paginator.page(1)
-        # except EmptyPage:
-        #     homepages = paginator.page(paginator.num_pages)
-        serializer = Specialty1Serializer(specialty1_list, many=True)
+        name = request.GET.get('name')
+        print('spstd w/ name:', name)
+        stand = SpecialtyStd.objects.get(name__exact=name)
+        print(stand.name)
+        serializer = SpecialtyStdSerializer(stand, many=False)
 
-        # return Response({'specialty1_list':serializer.data,'total_count':paginator.count})
-        return Response({'specialty1_list':serializer.data})
+        return Response({'spstd':serializer.data})

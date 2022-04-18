@@ -1,11 +1,20 @@
 from django.db import models
 
+import os
+from django.dispatch import receiver
+
 class UploadModel(models.Model):
-    file = models.FileField(upload_to='uploads/')
+    file = models.FileField(upload_to='uploads')
 
     class Meta:
         db_table = 'files'
         ordering = ['-id']
+
+@receiver(models.signals.post_delete, sender=UploadModel)
+def auto_delete_file_delte(sender, instance, **kwargs):
+    if instance.file:
+        if os.path.isfile(instance.file.path):
+            os.remove(instance.file.path)
 
 # 科别标准
 class SpecialtyStd(models.Model):
