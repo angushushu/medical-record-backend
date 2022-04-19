@@ -85,7 +85,7 @@ class UploadJsonViewSet(ModelViewSet):
         return Response(response)
 
 @api_view(['POST'])
-def postSpecialtyStd(request):
+def postSpecialtyStd(request, format=None):
     data = request.data['form']
     print('data:', data)
     specialtystd_serializer = SpecialtyStdSerializer(data=data)
@@ -98,7 +98,7 @@ def postSpecialtyStd(request):
     return Response({"request.data":request.data})
 
 @api_view(['POST'])
-def postSpecialty1(request):
+def postSpecialty1(request, format=None):
     data = request.data['form']
     # {
     #     value: '',
@@ -142,6 +142,26 @@ def postSpecialty3(request, sp2_value, format=None):
 
     return Response({"request.data":request.data})
 
+@api_view(['POST'])
+def updateSpecialtyStd(request):
+    data = request.data
+    # print(data)
+    print('name:', data['name'])
+    print('spstd:',SpecialtyStd.objects.all())
+    # instance = SpecialtyStd.objects.get(name=name)
+    instance = SpecialtyStd.objects.get(name__exact=data['name'])
+    print('instance:',instance)
+    # instance.delete()
+    specialtystd_serializer = SpecialtyStdSerializer(instance, data)
+    print('new spstd valid:',specialtystd_serializer.is_valid())
+    if specialtystd_serializer.is_valid():
+        specialtystd_serializer.save()
+    else:
+        print(specialtystd_serializer.errors)
+    print('giao')
+    
+    return Response({"request.data":request.data})
+
 class ViewSpStd(APIView):
     def get(self, request, format=None):
         name = request.GET.get('name')
@@ -151,3 +171,12 @@ class ViewSpStd(APIView):
         serializer = SpecialtyStdSerializer(stand, many=False)
 
         return Response({'spstd':serializer.data})
+
+class SpStdList(APIView):
+    def get(self, request, format=None):
+        print('@getSpStdList()')
+        spstd_list = SpecialtyStd.objects.all()
+        # print(spstd_list)
+        serializer = SpecialtyStdSerializer(spstd_list, many=True)
+        # print(serializer.data)
+        return Response({'spstd_list':serializer.data})
