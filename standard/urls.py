@@ -18,6 +18,7 @@ urlpatterns = [
     path('post-standard/specialty2/<str:sp1_value>/', views.postSpecialty2),
     path('post-standard/specialty3/<str:sp2_value>/', views.postSpecialty3),
     path('update-standard/specialty/', views.updateSpecialtyStd),
+    path('remove-spstd', views.removeSpecialtyStd),
     # path('upload-standards/', upload, name='upload'),
     path('', include(router.urls)),
 ]

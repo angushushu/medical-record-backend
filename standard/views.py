@@ -145,7 +145,7 @@ def postSpecialty3(request, sp2_value, format=None):
 @api_view(['POST'])
 def updateSpecialtyStd(request):
     data = request.data
-    # print(data)
+    print(data)
     print('name:', data['name'])
     print('spstd:',SpecialtyStd.objects.all())
     # instance = SpecialtyStd.objects.get(name=name)
@@ -161,6 +161,19 @@ def updateSpecialtyStd(request):
     print('giao')
     
     return Response({"request.data":request.data})
+
+@api_view(['POST'])
+def removeSpecialtyStd(request):
+    name = request.data['name']
+    print('name', name)
+    instance = SpecialtyStd.objects.get(name__exact=name)
+    if instance:
+        print(instance)
+        instance.delete()
+        print('deleted')
+        return Response({"result":name+" removed"})
+    else:
+        return Response({"result":"something went wrong"})
 
 class ViewSpStd(APIView):
     def get(self, request, format=None):
