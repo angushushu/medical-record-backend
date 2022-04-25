@@ -6,6 +6,8 @@ from turtle import home
 from unicodedata import name
 from xml.dom import minidom
 from django.http import Http404
+from django.http import FileResponse
+import openpyxl
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -22,6 +24,8 @@ from .serializers import SpecialtyStdSerializer, UploadSerializer, Specialty1Ser
 
 from django.db.models import Q # database查询
 
+import xlrd
+import openpyxl
 import json
 import xmltodict
 
@@ -37,6 +41,93 @@ class UploadXlsViewSet(ModelViewSet):
         file_name = str(upload.file).split('/')[1]
         file_dir = str(settings.MEDIA_ROOT)+'\\uploads\\'+file_name
         print('file_dir:', file_dir)
+
+        output = dict(name = file_name, specialty1 = [])
+
+        file_type = file_name.split('.')[1]
+        if(file_type=='xls'):
+            # xlrd.Book.encoding = "gbk"
+            file = xlrd.open_workbook(file_dir)
+            sheet = file.sheets()[0]
+            print(sheet)
+            print(sheet.nrows)
+            for i in range(1,sheet.nrows):
+                val = str(sheet.cell_value(i,0)).strip(' ')
+                label = sheet.cell_value(i,1).strip(' ')
+                print(val+' -- '+label+'     >> '+str(len(val)))
+                if len(val)==2:
+                    temp = dict(value = val, label=label)
+                    output['specialty1'].append(temp)
+                elif len(val)==4:
+                    father_val = val[0:2]
+                    temp_val = val[2:4]
+                    temp = dict(value = temp_val, label = label)
+                    for sp1 in output['specialty1']:
+                        if sp1['value'] == father_val:
+                            if 'specialty2' not in sp1:
+                                sp1['specialty2'] = []
+                            sp1['specialty2'].append(temp)
+                elif len(val)==6:
+                    grandpa_val = val[0:2]
+                    father_val = val[2:4]
+                    temp_val = val[4:6]
+                    temp = dict(value = temp_val, label = label)
+                    for sp1 in output['specialty1']:
+                        if sp1['value'] == grandpa_val:
+                            for sp2 in sp1['specialty2']:
+                                if sp2['value'] == father_val:
+                                    if 'specialty3' not in sp2:
+                                        sp2['specialty3'] = []
+                                    sp2['specialty3'].append(temp)
+        elif(file_type=='xlsx'):
+            file = openpyxl.load_workbook(file_dir)
+            sheets = file.sheetnames
+            sheet = file[sheets[0]]
+            print('max_row:',sheet.max_row)
+            for i in range(2,sheet.max_row + 1):
+                if sheet.cell(column=1, row=i).value==None or sheet.cell(column=2, row=i).value==None:
+                    continue
+                val = str(sheet.cell(column=1, row=i).value).strip(' ')
+                label = sheet.cell(column=2, row=i).value.strip(' ')
+                print(val+' -- '+label+'     >> '+str(len(val)))
+                if len(val)==2:
+                    temp = dict(value = val, label=label)
+                    output['specialty1'].append(temp)
+                elif len(val)==4:
+                    father_val = val[0:2]
+                    temp_val = val[2:4]
+                    temp = dict(value = temp_val, label = label)
+                    for sp1 in output['specialty1']:
+                        if sp1['value'] == father_val:
+                            if 'specialty2' not in sp1:
+                                sp1['specialty2'] = []
+                            sp1['specialty2'].append(temp)
+                elif len(val)==6:
+                    grandpa_val = val[0:2]
+                    father_val = val[2:4]
+                    temp_val = val[4:6]
+                    temp = dict(value = temp_val, label = label)
+                    for sp1 in output['specialty1']:
+                        if sp1['value'] == grandpa_val:
+                            for sp2 in sp1['specialty2']:
+                                if sp2['value'] == father_val:
+                                    if 'specialty3' not in sp2:
+                                        sp2['specialty3'] = []
+                                    sp2['specialty3'].append(temp)
+        else:
+            return Response("有问题啊")
+
+        print(output)
+        specialtystd_serializer = SpecialtyStdSerializer(data=output)
+        print('validation:', specialtystd_serializer.is_valid())
+        if specialtystd_serializer.is_valid():
+            specialtystd_serializer.save()
+        else:
+            print(specialtystd_serializer.errors)
+        print('giao')
+        response = "POST API: 你一上传了一个文件:{}".format(file_name)
+        return Response(response)
+
 
 class UploadJsonViewSet(ModelViewSet):
     queryset = UploadModel.objects.all()
@@ -96,6 +187,30 @@ class UploadJsonViewSet(ModelViewSet):
         # 砖码并录入
 
         return Response(response)
+
+@api_view(['GET'])
+def getJsonExample(request):
+    file=open(str(settings.MEDIA_ROOT)+'\\examples\\example.json','rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['COntent-Disposition'] = 'attachment; filename="example.json"'
+    return response
+
+@api_view(['GET'])
+def getXlsExample(request):
+    file=open(str(settings.MEDIA_ROOT)+'\\examples\\example.xls','rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment; filename="exaple.xls"'
+    return response
+
+@api_view(['GET'])
+def getXlsxExample(request):
+    file=open(str(settings.MEDIA_ROOT)+'\\examples\\example.xlsx','rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment; filename="example.xlsx"'
+    return response
 
 @api_view(['GET'])
 def getAppliedSpStd(request):

@@ -7,12 +7,16 @@ from standard import views
 #     'post': 'create',
 # })
 router = routers.DefaultRouter()
-router.register(r'upload-std/json-sp', views.UploadJsonViewSet, basename='upload')
+router.register(r'upload-std/json-sp', views.UploadJsonViewSet, basename='upload-json-sp')
+router.register(r'upload-std/xls-sp', views.UploadXlsViewSet, basename='upload-xls-sp')
 
 urlpatterns = [
     # path('get-standards/', views.StandardList.as_view()),
     path('get-spstd/', views.ViewSpStd.as_view()),
     path('get-spstds/', views.SpStdList.as_view()),
+    path('upload-std/json-example', views.getJsonExample),
+    path('upload-std/xls-example', views.getXlsExample),
+    path('upload-std/xlsx-example', views.getXlsxExample),
     path('get-standard/specialty/', views.getAppliedSpStd),
     path('set-standard/specialty/', views.setAppliedSpStd),
     path('post-standard/specialty/', views.postSpecialtyStd),
