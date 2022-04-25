@@ -91,9 +91,11 @@ class Specialty1Serializer(serializers.ModelSerializer):
     
 class SpecialtyStdSerializer(serializers.ModelSerializer):
     specialty1 = Specialty1Serializer(many=True, required=False)
+    id = -1
     class Meta:
         model = SpecialtyStd
         fields = (
+            'id',
             'name',
             'specialty1',
         )
@@ -133,6 +135,8 @@ class SpecialtyStdSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         print('SpecialtyStdSerializer.update()')
+        instance.name = validated_data.get('name', instance.name)
+        print('changing name to',validated_data['name'])
         Specialty1.objects.filter(specialtystd=instance).delete()
         sp1s_data = None
         if 'specialty1' in validated_data:
@@ -146,20 +150,21 @@ class SpecialtyStdSerializer(serializers.ModelSerializer):
                     sp2s_data = sp1_data.pop('specialty2')
                     print('sp1_data after pop:', sp1_data)
                 specialty1 = Specialty1.objects.create(specialtystd=instance, **sp1_data)
-                print('specialty1 obj created:', specialty1)
+                # print('specialty1 obj created:', specialty1)
                 if sp2s_data:
                     for sp2_data in sp2s_data:
-                        print(' |—— sp2_data:', sp2_data)
+                        # print(' |—— sp2_data:', sp2_data)
                         sp3s_data = None
                         if 'specialty3' in sp2_data:
                             sp3s_data = sp2_data.pop('specialty3')
                         specialty2 = Specialty2.objects.create(specialty1=specialty1,**sp2_data)
-                        print(' |   specialty2 obj created:', specialty2)
+                        # print(' |   specialty2 obj created:', specialty2)
                         if sp3s_data:
                             for sp3_data in sp3s_data:
-                                print(' | |—— sp3_data:', sp3_data)
+                                # print(' | |—— sp3_data:', sp3_data)
                                 specialty3 = Specialty3.objects.create(specialty2=specialty2, **sp3_data)
-                                print(' |     specialty3 obj created:', specialty3)
+                                # print(' |     specialty3 obj created:', specialty3)
+        instance.save()
         return instance
             
         

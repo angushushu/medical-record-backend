@@ -1,3 +1,4 @@
+from xml.dom import ValidationErr
 from django.db import models
 
 import os
@@ -18,11 +19,21 @@ def auto_delete_file_delte(sender, instance, **kwargs):
 
 # 科别标准
 class SpecialtyStd(models.Model):
-    name = models.CharField(max_length=255, primary_key=True)
+    # id = models.PositiveIntegerField(primary_key=True)
+    name = models.CharField(max_length=255, unique=False)
     class Meta:
         ordering = ('name',)
     def __str__(self):
         return self.name
+
+# 应用中的标准
+class AppliedStds(models.Model):
+    spstd = models.OneToOneField(SpecialtyStd, related_name='applied_stds', on_delete=models.CASCADE, default=None)
+    def save(self, *args, **kwargs):
+        if not self.pk and AppliedStds.objects.exists():
+            raise ValidationErr('There is can be only one AppliedStds instance')
+        return super(AppliedStds, self).save(*args, **kwargs)
+
 
 # 科别一级目录
 class Specialty1(models.Model):

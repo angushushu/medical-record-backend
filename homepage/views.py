@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from hashlib import new
 from turtle import home
 from django.http import Http404
@@ -115,4 +116,3 @@ class ViewHomepage(APIView):
         print('data-main_diag:',serializer.data['main_diag'])
         print('data-main_diag:',serializer.data['other_diags'])
         return Response({'homepage':serializer.data})
-

@@ -13,6 +13,8 @@ urlpatterns = [
     # path('get-standards/', views.StandardList.as_view()),
     path('get-spstd/', views.ViewSpStd.as_view()),
     path('get-spstds/', views.SpStdList.as_view()),
+    path('get-standard/specialty/', views.getAppliedSpStd),
+    path('set-standard/specialty/', views.setAppliedSpStd),
     path('post-standard/specialty/', views.postSpecialtyStd),
     path('post-standard/specialty1/', views.postSpecialty1),
     path('post-standard/specialty2/<str:sp1_value>/', views.postSpecialty2),
