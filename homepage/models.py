@@ -6,6 +6,7 @@ from django.db import models
 from django_mysql.models import ListCharField
 
 class Homepage(models.Model):
+
     org_name = models.CharField(max_length=20, blank=True)
     org_code = models.CharField(max_length=20, blank=True)
 
@@ -19,8 +20,8 @@ class Homepage(models.Model):
     age = models.CharField(max_length=20, blank=True)
     nationality = models.CharField(max_length=20, blank=True)
     newborn_check = models.BooleanField(default = False, blank=True) # boolean
-    newborn_birth_weight = models.CharField(max_length=20, blank=True)
-    newborn_admit_weight = models.CharField(max_length=20, blank=True)
+    newborn_birth_weight = models.FloatField(default=0.0, blank=True)
+    newborn_admit_weight = models.FloatField(default=0.0, blank=True)
     # birthplace = models.CharField(max_length=20, blank=True)
     birthplace = ListCharField(
         base_field=models.CharField(max_length=20, blank=True, default=None),
@@ -142,9 +143,9 @@ class Homepage(models.Model):
     release_type = models.CharField(max_length=20, blank=True)
     accept_hosp_2 = models.CharField(max_length=20, blank=True)
     accept_hosp_3 = models.CharField(max_length=20, blank=True)
-    cont_hosp_check = models.BooleanField(default = False, blank=True) #boolean
+    cont_hosp_check = models.BooleanField(default=False, blank=True) #boolean
     cont_hosp_plan = models.CharField(max_length=20, blank=True)
-    head_injury_check = models.BooleanField(default = False, blank=True) #boolean
+    head_injury_check = models.BooleanField(default=False, blank=True) #boolean
  
     class Meta:
         ordering = ('org_code',)

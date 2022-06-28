@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'homepage',
     'standard',
+    'settlement',
     # database
     # 'django_clickhouse',
 ]

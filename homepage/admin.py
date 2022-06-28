@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
 from .models import Charge, Homepage, LesionReason, MainDiag, OtherDiag, Op, Pathology, PostAdmitComa, PreAdmitComa
 # Register your models here.
 admin.site.register(Homepage)
