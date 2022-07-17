@@ -2,8 +2,48 @@ from wsgiref import validate
 from homepage.models import Homepage
 from homepage.serializers import HomepageSerializer
 from rest_framework import serializers
-from settlement.models import PostAdmitComa, PreAdmitComa, Settlement
+from settlement.models import MainOp, OtherOp, PostAdmitComa, PreAdmitComa, Settlement
 
+class MainOpSerializer(serializers.ModelSerializer):
+    op_time = serializers.ListField(
+        child = serializers.CharField()
+    )
+    anaesthesia_time = serializers.ListField(
+        child = serializers.CharField()
+    )
+    class Meta:
+        model = MainOp
+        fields = (
+            'name',
+            'code',
+            'anaesthesia_type',
+            'operator_name',
+            'operator_code',
+            'anaesthetist_name',
+            'anaesthetist_code',
+            'op_time',
+            'anaesthesia_time',
+        )
+class OtherOpSerializer(serializers.ModelSerializer):
+    op_time = serializers.ListField(
+        child = serializers.CharField()
+    )
+    anaesthesia_time = serializers.ListField(
+        child = serializers.CharField()
+    )
+    class Meta:
+        model = OtherOp
+        fields = (
+            'name',
+            'code',
+            'anaesthesia_type',
+            'operator_name',
+            'operator_code',
+            'anaesthetist_name',
+            'anaesthetist_code',
+            'op_time',
+            'anaesthesia_time',
+        )
 class PreAdmitComaSerializer(serializers.ModelSerializer):
     class Meta:
         model = PreAdmitComa
@@ -25,6 +65,8 @@ class SettlementSerializer(serializers.ModelSerializer):
     homepage_id = serializers.CharField(max_length=100)
     pre_admit_coma = PreAdmitComaSerializer(many=False)
     post_admit_coma = PostAdmitComaSerializer(many=False)
+    main_ops = MainOpSerializer(many=True)
+    other_ops = OtherOpSerializer(many=True)
 
     present_addr1 = serializers.ListField(
         child = serializers.CharField()
@@ -87,6 +129,9 @@ class SettlementSerializer(serializers.ModelSerializer):
 
             "physician_name",
             "nurse_ic_name",
+
+            "main_ops",
+            "other_ops",
         )
 
     def create(self, validated_data): # data -> obj
@@ -95,10 +140,18 @@ class SettlementSerializer(serializers.ModelSerializer):
         homepage_id = validated_data.pop('homepage_id')
         pre_admit_coma_data = validated_data.pop('pre_admit_coma')
         post_admit_coma_data = validated_data.pop('post_admit_coma')
+
+        main_ops_data = validated_data.pop('main_ops')
+        other_ops_data = validated_data.pop('other_ops')
         homepage = Homepage.objects.get(id=homepage_id)
         settlement = Settlement.objects.create(homepage=homepage, **validated_data)
         PreAdmitComa.objects.create(settlement=settlement, **pre_admit_coma_data)
         PostAdmitComa.objects.create(settlement=settlement, **post_admit_coma_data)
+        for main_op_data in main_ops_data:
+            MainOp.objects.create(settlement=settlement, **main_op_data)
+        for other_op_data in other_ops_data:
+            OtherOp.objects.create(settlement=settlement, **other_op_data)
+
 
         return settlement
     

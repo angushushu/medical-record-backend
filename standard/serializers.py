@@ -1,7 +1,7 @@
 from dataclasses import field
 from pyexpat import model
 from rest_framework import serializers
-from .models import Specialty1, Specialty2, Specialty3, SpecialtyStd, UploadModel
+from .models import Diag, DiagStd, GStd, General, Specialty1, Specialty2, Specialty3, SpecialtyStd, UploadModel
 
 class UploadSerializer(serializers.ModelSerializer):
     class Meta:
@@ -166,5 +166,123 @@ class SpecialtyStdSerializer(serializers.ModelSerializer):
                                 # print(' |     specialty3 obj created:', specialty3)
         instance.save()
         return instance
-            
-        
+
+class DiagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Diag
+        fields = (
+            'code',
+            'label',
+            'pinyin',
+            'pinyin_cap',
+            'description',
+        )
+    def create(self, validated_data):
+        print('@Diag.create()')
+        print(validated_data)
+        diag_code = validated_data['code']
+        print('diag:', diag_code)
+        existed = Diag.objects.filter(code__exact=diag_code) # 存在的
+        if len(existed)>0:
+            return existed[0]
+        diag = Diag.objects.create(**validated_data)
+        print('diag obj created:', diag)
+                
+        return diag
+    
+class DiagStdSerializer(serializers.ModelSerializer):
+    diag = DiagSerializer(many=True, required=False)
+    id = -1
+    class Meta:
+        model = DiagStd
+        fields = (
+            'id',
+            'name',
+            'diag',
+        )
+    def create(self, validated_data):
+        print('@DiagStd.create()')
+        print(validated_data)
+        diags_data = None
+        if 'diag' in validated_data:
+            diags_data = validated_data.pop('diag')
+        dgstd = DiagStd.objects.create(**validated_data)
+        print('dgstd obj created:', dgstd)
+        if diags_data:
+            for diag_data in diags_data:
+                print('diag_data:', diag_data)
+                Diag.objects.create(diagstd=dgstd, **diag_data)
+        return dgstd
+    
+    def update(self, instance, validated_data):
+        print('@DiagStdSerializer.update()')
+        instance.name = validated_data.get('name', instance.name)
+        print('changing name to',validated_data['name'])
+        Diag.objects.filter(diagstd=instance).delete()
+        if 'diag' in validated_data:
+            diags_data = validated_data.pop('diag')
+            for diag_data in diags_data:
+                print('diag_data:', diag_data)
+                Diag.objects.create(diagstd=instance, **diag_data)
+        instance.save()
+        return instance
+
+class GeneralSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = General
+        fields = (
+            'code',
+            'label',
+        )
+    def create(self, validated_data):
+        print('@GeneralSerializer.create()')
+        print(validated_data)
+        code = validated_data['code']
+        print('general:', code)
+        existed = General.objects.filter(code__exact=code) # 存在的
+        if len(existed)>0:
+            return existed[0]
+        general = General.objects.create(**validated_data)
+        print('general obj created:', general)
+                
+        return general
+
+class GStdSerializer(serializers.ModelSerializer):
+    general = GeneralSerializer(many=True, required=True)
+    type = serializers.ChoiceField(choices=GStd.Type)
+    id = -1
+    class Meta:
+        model = GStd
+        fields = (
+            'id',
+            'name',
+            'general',
+            'type'
+        )
+    def create(self, validated_data):
+        print('@GeneralStdSerializer.create()')
+        print(validated_data)
+        generals_data = None
+        if 'general' in validated_data:
+            generals_data = validated_data.pop('general')
+            print('generals_data:',generals_data)
+        gstd = GStd.objects.create(**validated_data)
+        print('gstd obj created:', gstd)
+        if generals_data:
+            for general_data in generals_data:
+                print('general_data:', general_data)
+                General.objects.create(gstd=gstd, **general_data)
+        return gstd
+    
+    def update(self, instance, validated_data):
+        print('@GeneralStdSerializer.update()')
+        instance.name = validated_data.get('name', instance.name)
+        print('changing name to',validated_data['name'])
+        General.objects.filter(gstd=instance).delete()
+        if 'general' in validated_data:
+            generals_data = validated_data.pop('general')
+            for general_data in generals_data:
+                print('general_data:', general_data)
+                General.objects.create(gstd=instance, **general_data)
+        instance.save()
+        return instance
