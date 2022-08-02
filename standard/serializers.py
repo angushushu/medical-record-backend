@@ -1,7 +1,7 @@
 from dataclasses import field
 from pyexpat import model
 from rest_framework import serializers
-from .models import Diag, DiagStd, GStd, General, Specialty1, Specialty2, Specialty3, SpecialtyStd, UploadModel
+from .models import Diag, DiagStd, G2Std, GStd, General, General1, General2, Specialty1, Specialty2, Specialty3, SpecialtyStd, UploadModel
 
 class UploadSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,6 +9,47 @@ class UploadSerializer(serializers.ModelSerializer):
         fields = '__all__'
     # def create(self, validated_data):
     #     print('hello')
+
+class General2Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = General2
+        fields = (
+            'value',
+            'label'
+        )
+    def create(self, validated_data):
+        print('@General2.create()')
+        g1_value = self.context.get("g1_value")
+        if g1_value:
+            print('general1:', g1_value)
+            general1 = General1.objects.get(value=g1_value)
+        print('general1 obj:', general1)
+        general2 = General2.objects.create(general1=general1, **validated_data)
+        print('general2 obj:', general1)
+        return general2
+
+class General1Serializer(serializers.ModelSerializer):
+    general2 = General2Serializer(many=True, required=False)
+    class Meta:
+        model = General1
+        fields = (
+            'value',
+            'label',
+            'general2'
+        )
+    def create(self, validated_data):
+        print('@General1.create()')
+        g1_value = self.context.get("g1_value")
+        sp2s_data = None
+        if 'general2' in validated_data:
+            g2s_data = validated_data.pop('general2')
+        g1_value = validated_data['value']
+        General1.objects.filter(value=g1_value).delete() # 删除存在的同value科别
+        general1 = General1.objects.create(**validated_data)
+        if g2s_data:
+            for g2_data in g2s_data:
+                general2 = General2.objects.create(general1=general1,**g2_data)
+        return general1
 
 class Specialty3Serializer(serializers.ModelSerializer):
     class Meta:
@@ -88,7 +129,59 @@ class Specialty1Serializer(serializers.ModelSerializer):
                         # print(' |     specialty3 obj created:', specialty3)
                 
         return specialty1
+
+class G2StdSerializer(serializers.ModelSerializer):
+    general1 = General1Serializer(many=True, required=False)
+    type = serializers.ChoiceField(choices=G2Std.Type)
+    id = -1
+    class Meta:
+        model = G2Std
+        fields = (
+            'id',
+            'name',
+            'general1',
+            'type'
+        )
+    def create(self, validated_data):
+        print('@G2StdSerializer.create()')
+        g1s_data = None
+        if 'general1' in validated_data:
+            g1s_data = validated_data.pop('general1')
+        g2std = G2Std.objects.create(**validated_data)
+        print('g2std obj created:', g2std)
+        if g1s_data:
+            for g1_data in g1s_data:
+                g2s_data = None
+                if 'general2' in g1_data:
+                    g2s_data = g1_data.pop('general2')
+                general1 = General1.objects.create(g2std=g2std, **g1_data)
+                if g2s_data:
+                    for g2_data in g2s_data:
+                        general2 = General2.objects.create(general1=general1,**g2_data)      
+        return g2std
     
+    def update(self, instance, validated_data):
+        print('@G2StdSerializer.update()')
+        instance.name = validated_data.get('name', instance.name)
+        print('changing name to',validated_data['name'])
+        General1.objects.filter(g2std=instance).delete()
+        g1s_data = None
+        if 'general1' in validated_data:
+            g1s_data = validated_data.pop('general1')
+        if g1s_data:
+            for g1_data in g1s_data:
+                print('g1_data:', g1_data)
+                g2s_data = None
+                if 'general2' in g1_data:
+                    g2s_data = g1_data.pop('general2')
+                    print('g1_data after pop:', g1_data)
+                general1 = General1.objects.create(g2std=instance, **g1_data)
+                if g2s_data:
+                    for g2_data in g2s_data:
+                        General2.objects.create(general1=general1,**g2_data)
+        instance.save()
+        return instance
+
 class SpecialtyStdSerializer(serializers.ModelSerializer):
     specialty1 = Specialty1Serializer(many=True, required=False)
     id = -1

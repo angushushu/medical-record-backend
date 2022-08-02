@@ -38,12 +38,14 @@ def updateForm(request):
     homepage_id = data['homepage_id']
     print('--update--')
     print('request.data:',data)
+    # print('western_release',data[])
     print('homepage_id:',homepage_id)
     # has settle
     # no settle
     settlements = Settlement.objects.filter(homepage_id=homepage_id)
     if len(settlements) == 0:
         print('---- create a settlement ----')
+        print('western_release',data['western_release'])
         settlement_serializer = SettlementSerializer(data=data)
         if settlement_serializer.is_valid():
             print('valid')
@@ -53,9 +55,10 @@ def updateForm(request):
         print('---- giao ----')
         return Response({"request.data":request.data})
     else:
+        print('---- already have a settlement ----')
         settlement = settlements[0]
         settlement_serializer = SettlementSerializer(settlement, data)
-        print(settlements)
+        print('old settlement:',settlements)
         print('settlement valid:',settlement_serializer.is_valid())
         if settlement_serializer.is_valid():
             # print(homepage_serializer.validated_data)
@@ -116,24 +119,27 @@ class ViewSettlement(APIView):
         response = None
         if len(homepages)!=0:
             print('got homepage', homepages[0])
+            # 如果新建
             if new == 'true' or len(settlements)==0:
                 print('  no settlement', settlements)
                 response = HomepageSerializer(homepages[0], many=False).data
                 # transfer homepage to settlement
                 response['list_sn'] = ''
+            # 如果修改
             else:
-                print('  got settlement', settlements[0])
+                print(' |-- got settlement', settlements[0])
                 response = SettlementSerializer(settlements[0], many=False).data
+                # print('---- the settlement data:',response)
         else:
             print('no homepage', homepages)
-            response = ResponseError()
+            return ResponseError()
         print('new:', new)
         print('type(new)', type(new))
         if new == 'true':
             response['overwrite'] = True
         else:
             response['overwrite'] = False
-        print(response)
+        # print(response)
         
         return Response({'settlement':response})
 

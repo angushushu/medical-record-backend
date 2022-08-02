@@ -57,7 +57,18 @@ urlpatterns = [
     path('get-all-gstds/', views.AllGStdList.as_view()),
     path('post-standard/gstd/', views.postGStd),
     path('update-standard/gstd/', views.updateGStd),
-    path('post-standard/general/', views.postGeneral),
+    path('post-standard/general/', views.postGeneral), # 似乎没用
     path('remove-gstd', views.removeGStd),
-    path('get-type-name', views.getTypeName)
+    path('get-type-name', views.getTypeName),
+
+    # g2std
+    path('get-standard/g2std/', views.getAppliedG2Std), # get applied g2std of certain type
+    path('get-standard/g2stds', views.getAppliedG2Stds), # get all applied gstds with type
+    path('set-standard/g2std/', views.setAppliedG2Std), # set applied gstd of certain type
+    path('get-g2std/', views.ViewG2Std.as_view()),
+    path('get-g2stds/', views.G2StdList.as_view()),
+    path('get-all-g2stds/', views.AllG2StdList.as_view()),
+    path('post-standard/g2std/', views.postG2Std),
+    path('update-standard/g2std/', views.updateG2Std),
+    path('remove-g2std', views.removeG2Std)
 ]

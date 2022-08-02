@@ -24,6 +24,7 @@ class GStd(models.Model):
         NATIONALITY = 'NATIONALITY'
         ETHNICITY = 'ETHNICITY'
         IDTYPE = 'IDTYPE'
+        PROFESSION = 'PROFESSION'
         GENDER = 'GENDER'
         MARRIAGESTAT = 'MARRIAGESTAT'
         SETTLEMENTTYPE = 'SETTLEMENTTYPE'
@@ -55,6 +56,22 @@ class GStd(models.Model):
     def __str__(self):
         return self.name
 
+# 两层的通用标准目录
+class G2Std(models.Model):
+    name = models.CharField(max_length=255, unique=False)
+    class Type(models.TextChoices):
+        HEALTYPE = 'HEALTYPE'
+        BLOODTYPE = 'BLOODTYPE'
+    type = models.CharField(
+        max_length=32,
+        choices=Type.choices,
+        default=Type.HEALTYPE,
+    )
+    class Meta:
+        ordering = ('name',)
+    def __str__(self):
+        return self.name
+
 # 科别标准
 class SpecialtyStd(models.Model):
     # id = models.PositiveIntegerField(primary_key=True)
@@ -77,6 +94,7 @@ class AppliedGStds(models.Model):
     nationality_std = models.ForeignKey(GStd, related_name='applied_nationality_std', on_delete=models.SET_NULL, null=True, blank=True)
     ethnicity_std = models.ForeignKey(GStd, related_name='applied_ethnicity_std', on_delete=models.SET_NULL, null=True, blank=True)
     id_type_std = models.ForeignKey(GStd, related_name='applied_id_type_std', on_delete=models.SET_NULL, null=True, blank=True)
+    profession_std = models.ForeignKey(GStd, related_name='applied_profession_std', on_delete=models.SET_NULL, null=True, blank=True)
     gender_std = models.ForeignKey(GStd, related_name='applied_gender_std', on_delete=models.SET_NULL, null=True, blank=True)
     marriage_stat_std = models.ForeignKey(GStd, related_name='applied_marriage_stat_std', on_delete=models.SET_NULL, null=True, blank=True)
     settlemenet_type_std = models.ForeignKey(GStd, related_name='applied_settlement_type_std', on_delete=models.SET_NULL, null=True, blank=True)
@@ -84,11 +102,11 @@ class AppliedGStds(models.Model):
     special_person_type_std = models.ForeignKey(GStd, related_name='applied_special_person_type_std', on_delete=models.SET_NULL, null=True, blank=True)
     newborn_admit_type_std = models.ForeignKey(GStd, related_name='applied_newborn_admit_type_std', on_delete=models.SET_NULL, null=True, blank=True)
     hosp_reason_std = models.ForeignKey(GStd, related_name='applied_reason_std', on_delete=models.SET_NULL, null=True, blank=True)
-    heal_type_std = models.ForeignKey(GStd, related_name='heal_type_std', on_delete=models.SET_NULL, null=True, blank=True)
+    # heal_type_std = models.ForeignKey(GStd, related_name='applied_heal_type_std', on_delete=models.SET_NULL, null=True, blank=True)
     admit_path_std = models.ForeignKey(GStd, related_name='applied_applied_admit_path_std', on_delete=models.SET_NULL, null=True, blank=True)
     anaesthesia_type_std = models.ForeignKey(GStd, related_name='applied_anaesthesia_type_std', on_delete=models.SET_NULL, null=True, blank=True)
     cu_type_std = models.ForeignKey(GStd, related_name='applied_cu_type_std', on_delete=models.SET_NULL, null=True, blank=True)
-    blood_type_std = models.ForeignKey(GStd, related_name='applied_blood_type_std', on_delete=models.SET_NULL, null=True, blank=True)
+    # blood_type_std = models.ForeignKey(GStd, related_name='applied_blood_type_std', on_delete=models.SET_NULL, null=True, blank=True)
     payment_type_std = models.ForeignKey(GStd, related_name='applied_payment_type_std', on_delete=models.SET_NULL, null=True, blank=True)
     purchase_method_std = models.ForeignKey(GStd, related_name='applied_purchase_method_std', on_delete=models.SET_NULL, null=True, blank=True)
     admit_condition_std = models.ForeignKey(GStd, related_name='applied_admit_condition_std', on_delete=models.SET_NULL, null=True, blank=True)
@@ -102,6 +120,15 @@ class AppliedGStds(models.Model):
         if not self.pk and AppliedGStds.objects.exists():
             raise ValidationErr('There can only be one AppliedGStd instance')
         return super(AppliedGStds, self).save(*args, **kwargs)
+
+# 应用中的二层通用标准
+class AppliedG2Stds(models.Model):
+    heal_type_std = models.ForeignKey(G2Std, related_name='applied_heal_type_std', on_delete=models.SET_NULL, null=True, blank=True)
+    blood_type_std = models.ForeignKey(G2Std, related_name='applied_blood_type_std', on_delete=models.SET_NULL, null=True, blank=True)
+    def save(self, *args, **kwargs):
+        if not self.pk and AppliedG2Stds.objects.exists():
+            raise ValidationErr('There can only be one AppliedG2Std instance')
+        return super(AppliedG2Stds, self).save(*args, **kwargs)
 
 # 应用中的科别标准
 class AppliedSpStd(models.Model):
@@ -118,6 +145,26 @@ class AppliedDgStd(models.Model):
             raise ValidationErr('There can only be one AppliedDgStd instance')
         return super(AppliedDgStd, self).save(*args, **kwargs)
 
+# 通用一级目录
+class General1(models.Model):
+    value = models.CharField(max_length=32, default='', blank=True)
+    label = models.CharField(max_length=32, default='', blank=True)
+    g2std = models.ForeignKey(G2Std, related_name='general1', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('value',)
+    def __str__(self):
+        return self.value
+# 通用二级目录
+class General2(models.Model):
+    value = models.CharField(max_length=32, default='', blank=True)
+    label = models.CharField(max_length=32, default='', blank=True)
+    general1 = models.ForeignKey(General1, related_name='general2', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('value',)
+    def __str__(self):
+        return self.value
 
 # 科别一级目录
 class Specialty1(models.Model):

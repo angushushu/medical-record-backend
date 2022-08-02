@@ -22,8 +22,8 @@ from django.conf import settings
 import xml.etree.ElementTree as ET
 import chardet
 
-from .models import AppliedDgStd, AppliedGStds, AppliedSpStd, DiagStd, GStd, Specialty1, Specialty2, SpecialtyStd, UploadModel#, Specialty3
-from .serializers import DiagSerializer, DiagStdSerializer, GStdSerializer, GeneralSerializer, SpecialtyStdSerializer, UploadSerializer, Specialty1Serializer, Specialty2Serializer, Specialty3Serializer
+from .models import AppliedDgStd, AppliedG2Stds, AppliedGStds, AppliedSpStd, DiagStd, G2Std, GStd, Specialty1, Specialty2, SpecialtyStd, UploadModel#, Specialty3
+from .serializers import DiagSerializer, DiagStdSerializer, G2StdSerializer, GStdSerializer, GeneralSerializer, SpecialtyStdSerializer, UploadSerializer, Specialty1Serializer, Specialty2Serializer, Specialty3Serializer
 
 from django.db.models import Q # database查询
 
@@ -669,6 +669,8 @@ def getAppliedGStd(request):
             applied_gstd = AppliedGStds.objects.create(ethnicity_std=gstd)
         elif type == 'IDTYPE':
             applied_gstd = AppliedGStds.objects.create(id_type_std=gstd)
+        elif type == 'PROFESSION':
+            applied_gstd = AppliedGStds.objects.create(profession_std=gstd)
         elif type == 'GENDER':
             applied_gstd = AppliedGStds.objects.create(gender_std=gstd)
         elif type == 'MARRIAGESTAT':
@@ -683,16 +685,16 @@ def getAppliedGStd(request):
             applied_gstd = AppliedGStds.objects.create(newborn_admit_type_std=gstd)
         elif type == 'HOSPREASON':
             applied_gstd = AppliedGStds.objects.create(hosp_reason_std=gstd)
-        elif type == 'HEALTYPE':
-            applied_gstd = AppliedGStds.objects.create(heal_type_std=gstd)
+        # elif type == 'HEALTYPE':
+        #     applied_gstd = AppliedGStds.objects.create(heal_type_std=gstd)
         elif type == 'ADMITPATH':
             applied_gstd = AppliedGStds.objects.create(admit_path_std=gstd)
         elif type == 'ANAESTHESIATYPE':
             applied_gstd = AppliedGStds.objects.create(anaesthesia_type_std=gstd)
         elif type == 'CUTYPE':
             applied_gstd = AppliedGStds.objects.create(cu_type_std=gstd)
-        elif type == 'BLOODTYPE':
-            applied_gstd = AppliedGStds.objects.create(blood_type_std=gstd)
+        # elif type == 'BLOODTYPE':
+        #     applied_gstd = AppliedGStds.objects.create(blood_type_std=gstd)
         elif type == 'PAYMENTTYPE':
             applied_gstd = AppliedGStds.objects.create(payment_type_std=gstd)
         elif type == 'PURCHASEMETHOD':
@@ -724,6 +726,9 @@ def getAppliedGStd(request):
         elif type == 'IDTYPE':
             if not applied_gstd.id_type_std:
                 applied_gstd.id_type_std = gstd
+        elif type == 'PROFESSION':
+            if not applied_gstd.profession_std:
+                applied_gstd.profession_std = gstd
         elif type == 'GENDER':
             if not applied_gstd.gender_std:
                 applied_gstd.gender_std = gstd
@@ -745,9 +750,9 @@ def getAppliedGStd(request):
         elif type == 'HOSPREASON':
             if not applied_gstd.hosp_reason_std:
                 applied_gstd.hosp_reason_std = gstd
-        elif type == 'HEALTYPE':
-            if not applied_gstd.heal_type_std:
-                applied_gstd.heal_type_std = gstd
+        # elif type == 'HEALTYPE':
+        #     if not applied_gstd.heal_type_std:
+        #         applied_gstd.heal_type_std = gstd
         elif type == 'ADMITPATH':
             if not applied_gstd.admit_path_std:
                 applied_gstd.admit_path_std = gstd
@@ -757,9 +762,9 @@ def getAppliedGStd(request):
         elif type == 'CUTYPE':
             if not applied_gstd.cu_type_std:
                 applied_gstd.cu_type_std = gstd
-        elif type == 'BLOODTYPE':
-            if not applied_gstd.blood_type_std:
-                applied_gstd.blood_type_std = gstd
+        # elif type == 'BLOODTYPE':
+        #     if not applied_gstd.blood_type_std:
+        #         applied_gstd.blood_type_std = gstd
         elif type == 'PAYMENTTYPE':
             if not applied_gstd.payment_type_std:
                 applied_gstd.payment_type_std = gstd
@@ -795,6 +800,8 @@ def getAppliedGStd(request):
         response = GStdSerializer(applied_gstd.ethnicity_std)
     elif type == 'IDTYPE':
         response = GStdSerializer(applied_gstd.id_type_std)
+    elif type == 'PROFESSION':
+        response = GStdSerializer(applied_gstd.profession_std)
     elif type == 'GENDER':
         response = GStdSerializer(applied_gstd.gender_std)
     elif type == 'MARRIAGESTAT':
@@ -809,16 +816,16 @@ def getAppliedGStd(request):
         response = GStdSerializer(applied_gstd.newborn_admit_type_std)
     elif type == 'HOSPREASON':
         response = GStdSerializer(applied_gstd.hosp_reason_std)
-    elif type == 'HEALTYPE':
-        response = GStdSerializer(applied_gstd.heal_type_std)
+    # elif type == 'HEALTYPE':
+    #     response = GStdSerializer(applied_gstd.heal_type_std)
     elif type == 'ADMITPATH':
         response = GStdSerializer(applied_gstd.admit_path_std)
     elif type == 'ANAESTHESIATYPE':
         response = GStdSerializer(applied_gstd.anaesthesia_type_std)
     elif type == 'CUTYPE':
         response = GStdSerializer(applied_gstd.cu_type_std)
-    elif type == 'BLOODTYPE':
-        response = GStdSerializer(applied_gstd.blood_type_std)
+    # elif type == 'BLOODTYPE':
+    #     response = GStdSerializer(applied_gstd.blood_type_std)
     elif type == 'PAYMENTTYPE':
         response = GStdSerializer(applied_gstd.payment_type_std)
     elif type == 'PURCHASEMETHOD':
@@ -846,6 +853,7 @@ names = dict()
 names['NATIONALITY'] = '国籍'
 names['ETHNICITY'] = '民族'
 names['IDTYPE'] = '证件类型'
+names['PROFESSION'] = '职业'
 names['GENDER'] = '性别'
 names['MARRIAGESTAT'] = '婚姻状态'
 names['SETTLEMENTTYPE'] = '医保类型'
@@ -877,34 +885,36 @@ def getTypeName(request):
 def getAppliedGStds(request):
     # dict : type->typed std variable name
     if not AppliedGStds.objects.exists():
-        stds = None
+        # create one
+        applied_gstds = AppliedGStds.objects.create()
     else:
         applied_gstds = AppliedGStds.objects.get()
-        stds = dict()
-        stds['NATIONALITY'] = applied_gstds.nationality_std.id if applied_gstds.nationality_std else None
-        stds['ETHNICITY'] = applied_gstds.ethnicity_std.id if applied_gstds.ethnicity_std else None
-        stds['IDTYPE'] = applied_gstds.id_type_std.id if applied_gstds.id_type_std else None
-        stds['GENDER'] = applied_gstds.gender_std.id if applied_gstds.gender_std else None
-        stds['MARRIAGESTAT'] = applied_gstds.marriage_stat_std.id if applied_gstds.marriage_stat_std else None
-        stds['SETTLEMENTTYPE'] = applied_gstds.settlemenet_type_std.id if applied_gstds.settlemenet_type_std else None
-        stds['CONTACTRELATION'] = applied_gstds.contact_relation_std.id if applied_gstds.contact_relation_std else None
-        stds['SPECIALPERSONTYPE'] = applied_gstds.special_person_type_std.id if applied_gstds.special_person_type_std else None
-        stds['NEWBORNADMITTYPE'] = applied_gstds.newborn_admit_type_std.id if applied_gstds.newborn_admit_type_std else None
-        stds['HOSPREASON'] = applied_gstds.hosp_reason_std.id if applied_gstds.hosp_reason_std else None
-        stds['HEALTYPE'] = applied_gstds.heal_type_std.id if applied_gstds.heal_type_std else None
-        stds['ADMITPATH'] = applied_gstds.admit_path_std.id if applied_gstds.admit_path_std else None
-        stds['ANAESTHESIATYPE'] = applied_gstds.anaesthesia_type_std.id if applied_gstds.anaesthesia_type_std else None
-        stds['CUTYPE'] = applied_gstds.cu_type_std.id if applied_gstds.cu_type_std else None
-        stds['BLOODTYPE'] = applied_gstds.blood_type_std.id if applied_gstds.blood_type_std else None
-        stds['PAYMENTTYPE'] = applied_gstds.payment_type_std.id if applied_gstds.payment_type_std else None
-        stds['PURCHASEMETHOD'] = applied_gstds.purchase_method_std.id if applied_gstds.purchase_method_std else None
-        stds['ADMITCONDITION'] = applied_gstds.admit_condition_std.id if applied_gstds.admit_condition_std else None
-        stds['BLOODGROUP'] = applied_gstds.blood_group_std.id if applied_gstds.blood_group_std else None
-        stds['RH'] = applied_gstds.rh_std.id if applied_gstds.rh_std else None
-        stds['RECORDQUALITY'] = applied_gstds.record_quality_std.id if applied_gstds.record_quality_std else None
-        stds['OPLVL'] = applied_gstds.op_lvl_std.id if applied_gstds.op_lvl_std else None
-        stds['WOUNDHEALINGLVL'] = applied_gstds.wound_healing_lvl_std.id if applied_gstds.wound_healing_lvl_std else None
-        stds['RELEASETYPE'] = applied_gstds.release_type_std.id if applied_gstds.release_type_std else None
+    stds = dict()
+    stds['NATIONALITY'] = applied_gstds.nationality_std.id if applied_gstds.nationality_std else None
+    stds['ETHNICITY'] = applied_gstds.ethnicity_std.id if applied_gstds.ethnicity_std else None
+    stds['IDTYPE'] = applied_gstds.id_type_std.id if applied_gstds.id_type_std else None
+    stds['PROFESSION'] = applied_gstds.profession_std.id if applied_gstds.profession_std else None
+    stds['GENDER'] = applied_gstds.gender_std.id if applied_gstds.gender_std else None
+    stds['MARRIAGESTAT'] = applied_gstds.marriage_stat_std.id if applied_gstds.marriage_stat_std else None
+    stds['SETTLEMENTTYPE'] = applied_gstds.settlemenet_type_std.id if applied_gstds.settlemenet_type_std else None
+    stds['CONTACTRELATION'] = applied_gstds.contact_relation_std.id if applied_gstds.contact_relation_std else None
+    stds['SPECIALPERSONTYPE'] = applied_gstds.special_person_type_std.id if applied_gstds.special_person_type_std else None
+    stds['NEWBORNADMITTYPE'] = applied_gstds.newborn_admit_type_std.id if applied_gstds.newborn_admit_type_std else None
+    stds['HOSPREASON'] = applied_gstds.hosp_reason_std.id if applied_gstds.hosp_reason_std else None
+    # stds['HEALTYPE'] = applied_gstds.heal_type_std.id if applied_gstds.heal_type_std else None
+    stds['ADMITPATH'] = applied_gstds.admit_path_std.id if applied_gstds.admit_path_std else None
+    stds['ANAESTHESIATYPE'] = applied_gstds.anaesthesia_type_std.id if applied_gstds.anaesthesia_type_std else None
+    stds['CUTYPE'] = applied_gstds.cu_type_std.id if applied_gstds.cu_type_std else None
+    # stds['BLOODTYPE'] = applied_gstds.blood_type_std.id if applied_gstds.blood_type_std else None
+    stds['PAYMENTTYPE'] = applied_gstds.payment_type_std.id if applied_gstds.payment_type_std else None
+    stds['PURCHASEMETHOD'] = applied_gstds.purchase_method_std.id if applied_gstds.purchase_method_std else None
+    stds['ADMITCONDITION'] = applied_gstds.admit_condition_std.id if applied_gstds.admit_condition_std else None
+    stds['BLOODGROUP'] = applied_gstds.blood_group_std.id if applied_gstds.blood_group_std else None
+    stds['RH'] = applied_gstds.rh_std.id if applied_gstds.rh_std else None
+    stds['RECORDQUALITY'] = applied_gstds.record_quality_std.id if applied_gstds.record_quality_std else None
+    stds['OPLVL'] = applied_gstds.op_lvl_std.id if applied_gstds.op_lvl_std else None
+    stds['WOUNDHEALINGLVL'] = applied_gstds.wound_healing_lvl_std.id if applied_gstds.wound_healing_lvl_std else None
+    stds['RELEASETYPE'] = applied_gstds.release_type_std.id if applied_gstds.release_type_std else None
     # 添加type->中文的对照，用于前端显示
 
     response = dict()
@@ -933,6 +943,8 @@ def setAppliedGStd(request, format=None):
         applied_gstd.ethnicity_std = gstd
     elif type == 'IDTYPE':
         applied_gstd.id_type_std = gstd
+    elif type == 'PROFESSION':
+        applied_gstd.profession_std = gstd
     elif type == 'GENDER':
         applied_gstd.gender_std = gstd
     elif type == 'MARRIAGESTAT':
@@ -947,16 +959,16 @@ def setAppliedGStd(request, format=None):
         applied_gstd.newborn_admit_type_std = gstd
     elif type == 'HOSPREASON':
         applied_gstd.hosp_reason_std = gstd
-    elif type == 'HEALTYPE':
-        applied_gstd.heal_type_std = gstd
+    # elif type == 'HEALTYPE':
+    #     applied_gstd.heal_type_std = gstd
     elif type == 'ADMITPATH':
         applied_gstd.admit_path_std = gstd
     elif type == 'ANAESTHESIATYPE':
         applied_gstd.anaesthesia_type_std = gstd
     elif type == 'CUTYPE':
         applied_gstd.cu_type_std = gstd
-    elif type == 'BLOODTYPE':
-        applied_gstd.blood_type_std = gstd
+    # elif type == 'BLOODTYPE':
+    #     applied_gstd.blood_type_std = gstd
     elif type == 'PAYMENTTYPE':
         applied_gstd.payment_type_std = gstd
     elif type == 'PURCHASEMETHOD':
@@ -1166,3 +1178,164 @@ class UploadGJsonViewSet(ModelViewSet):
             print('giao')
         response = "POST API: 你一上传了一个文件:{}".format(file_name)
         return Response(response)
+
+# G2Std
+@api_view(['GET'])
+def getAppliedG2Std(request):
+    type = request.GET.get('type')
+    typed_g2std = G2Std.objects.filter(type=type)[:1]
+    if len(typed_g2std)==0:
+        g2std = G2Std.objects.create(name='默认标准',type=type)
+    else:
+        g2std = typed_g2std.get()
+    applied_g2std = None
+    if not AppliedG2Stds.objects.exists():
+        print('---- creating AppliedG2Std of type', type)
+        print('gstd got:', g2std)
+        if type == 'HEALTYPE':
+            applied_g2std = AppliedG2Stds.objects.create(heal_type_std=g2std)
+        elif type == 'BLOODTYPE':
+            applied_g2std = AppliedG2Stds.objects.create(blood_type_std=g2std)
+    else:
+        applied_g2std = AppliedG2Stds.objects.get()
+        if type == 'HEALTYPE':
+            if not applied_g2std.heal_type_std:
+                applied_g2std.heal_type_std = g2std
+        elif type == 'BLOODTYPE':
+            if not applied_g2std.blood_type_std:
+                applied_g2std.blood_type_std = g2std
+    print('applied_g2std got:',applied_g2std)
+    if type == 'HEALTYPE':
+        response = G2StdSerializer(applied_g2std.heal_type_std)
+    elif type == 'BLOODTYPE':
+        response = G2StdSerializer(applied_g2std.blood_type_std)
+    print(response.data)
+    general1s = response.data['general1']
+    id = response.data['id']
+    # use children key
+    for general1 in general1s:
+        if 'general2' in general1.keys():
+            general1['children'] = general1.pop('general2')
+    return Response({'id':id,'general1':general1s})
+
+@api_view(['GET'])
+def getAppliedG2Stds(request):
+    if not AppliedG2Stds.objects.exists():
+        applied_g2stds = AppliedG2Stds.objects.create()
+    else:
+        applied_g2stds = AppliedG2Stds.objects.get()
+    stds = dict()
+    stds['HEALTYPE'] = applied_g2stds.heal_type_std.id if applied_g2stds.heal_type_std else None
+    stds['BLOODTYPE'] = applied_g2stds.blood_type_std.id if applied_g2stds.blood_type_std else None
+    response = dict()
+    response['standards'] = stds
+    response['names'] = names
+    print(response)
+    return Response(response)
+
+@api_view(['POST'])
+def setAppliedG2Std(request, format=None):
+    print('setAppliedG2Std()')
+    print('request.data',request.data)
+    id = request.data['id']
+    type = request.data['type']
+    g2std = G2Std.objects.get(id__exact=id)
+
+    if not AppliedG2Stds.objects.exists():
+        print('---- creating AppliedG2Std')
+        applied_g2std = AppliedG2Stds.objects.create()
+    else:
+        applied_g2std = AppliedG2Stds.objects.get()
+    if type == 'HEALTYPE':
+        applied_g2std.heal_type_std = g2std
+    elif type == 'BLOODTYPE':
+        applied_g2std.blood_type_std = g2std
+    applied_g2std.save()
+    print('applied_g2std got:',applied_g2std)
+    response = G2StdSerializer(g2std)
+    return Response({'applied_g2std':response.data})
+
+@api_view(['POST'])
+def postG2Std(request, format=None):
+    print(request)
+    data = request.data['form']
+    response = None
+    print('data:',data)
+    g2std_serializer = G2StdSerializer(data=data)
+    print('validation:',g2std_serializer.is_valid())
+    if g2std_serializer.is_valid():
+        response = G2StdSerializer(g2std_serializer.save())
+    else:
+        print(g2std_serializer.errors)
+    print('giao')
+    print(response)
+    print(type(response))
+    return Response({"g2std":response.data})
+
+@api_view(['POST'])
+def updateG2Std(request):
+    print('@updateG2Std()')
+    print('request:',request)
+    data = request.data
+    id = data['id']
+    type = data['type']
+    print(data)
+    print('id:', id) # id?
+    print('type:', type)
+    instance = G2Std.objects.get(id__exact=id)
+    print('instance:',instance)
+    g2std_serializer = G2StdSerializer(instance, data)
+    print('new gstd valid:',g2std_serializer.is_valid())
+    if g2std_serializer.is_valid():
+        g2std_serializer.save()
+    else:
+        print(g2std_serializer.errors)
+    print('giao')
+    return Response({"request.data":request.data})
+
+class ViewG2Std(APIView):
+    def get(self, request, format=None):
+        id = request.GET.get('id')
+        print('g2std w/ id:', id)
+        stand = G2Std.objects.get(id__exact=id)
+        print(stand.id)
+        serializer = G2StdSerializer(stand, many=False)
+        response = dict()
+        response['g2std'] = serializer.data
+        response['type_name'] = names[stand.type]
+        return Response(response)
+
+class G2StdList(APIView):
+    def get(self, request, format=None):
+        print('@getG2StdList()')
+        type = request.GET.get('type')
+        print('type:', type)
+        # g2std_list = G2Std.objects.all()
+        g2std_list = G2Std.objects.filter(type=type)
+        print(g2std_list)
+        serializer = G2StdSerializer(g2std_list, many=True)
+        print(serializer.data)
+        return Response({'g2std_list':serializer.data})
+
+class AllG2StdList(APIView):
+    def get(self, request, format=None):
+        print('@getNoTypeG2StdList()')
+        g2std_list = G2Std.objects.all()
+        print(g2std_list)
+        serializer = G2StdSerializer(g2std_list, many=True)
+        print(serializer.data)
+        return Response({'g2std_list':serializer.data})
+
+@api_view(['POST'])
+def removeG2Std(request):
+    id = request.data['id']
+    print('id', id)
+    instance = G2Std.objects.get(id__exact=id)
+    print('instance',instance)
+    if instance:
+        print(instance)
+        instance.delete()
+        print('deleted')
+        return Response({"result":str(id)+" removed"})
+    else:
+        return Response({"result":"something went wrong"})
