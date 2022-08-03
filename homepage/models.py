@@ -113,7 +113,12 @@ class Homepage(models.Model):
     )
     release_sickroom = models.CharField(max_length=20, blank=True)
     hosp_duration = models.IntegerField(default = 0, blank=True) # int
-    diagnosis = models.CharField(max_length=20, blank=True)
+    # diagnosis = models.CharField(max_length=20, blank=True)
+    diagnosis = ListCharField(
+        base_field=models.CharField(max_length=64, blank=True, default=None),
+        max_length=(50 * 65), # 是否应用listcharfield，将有数量限制
+        default=None,
+    )
     disease_code = models.CharField(max_length=20, blank=True)
     # main_diagnosis 单独 model 或在serializer里用 create？
 
@@ -154,7 +159,12 @@ class Homepage(models.Model):
         return self.org_name
 
 class MainDiag(models.Model):
-    release = models.TextField(max_length=256, default='', blank=True)
+    # release = models.TextField(max_length=256, default='', blank=True)
+    release = ListCharField(
+        base_field=models.CharField(max_length=64, blank=True, default=None),
+        max_length=(50 * 65), # 是否应用listcharfield，将有数量限制
+        default=None,
+    )
     code = models.CharField(max_length=20, default='', blank=True)
     condition = models.CharField(max_length=20, default='', blank=True)
     homepage = models.OneToOneField(Homepage, related_name='main_diag', on_delete=models.CASCADE, default=None)
@@ -165,7 +175,12 @@ class LesionReason(models.Model):
     homepage = models.OneToOneField(Homepage, related_name='lesion_reason', on_delete=models.CASCADE, default=None)
 
 class Pathology(models.Model):
-    description = models.TextField(max_length=256, default='', blank=True)
+    # description = models.TextField(max_length=256, default='', blank=True)
+    description = ListCharField(
+        base_field=models.CharField(max_length=64, blank=True, default=None),
+        max_length=(50 * 65), # 是否应用listcharfield，将有数量限制
+        default=None,
+    )
     code = models.CharField(max_length=20, default='', blank=True)
     number = models.CharField(max_length=20, default='', blank=True)
     homepage = models.OneToOneField(Homepage, related_name='pathology', on_delete=models.CASCADE, default=None)
@@ -183,7 +198,12 @@ class PostAdmitComa(models.Model):
     homepage = models.OneToOneField(Homepage, related_name='post_admit_coma', on_delete=models.CASCADE, default=None)
 
 class OtherDiag(models.Model):
-    release = models.TextField(max_length=256, blank=True)
+    # release = models.TextField(max_length=256, blank=True)
+    release = ListCharField(
+        base_field=models.CharField(max_length=64, blank=True, default=None),
+        max_length=(50 * 65), # 是否应用listcharfield，将有数量限制
+        default=None,
+    )
     code = models.CharField(max_length=20, blank=True)
     condition = models.CharField(max_length=20, blank=True)
     homepage = models.ForeignKey(Homepage, related_name='other_diags', on_delete=models.CASCADE)

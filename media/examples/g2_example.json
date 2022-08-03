@@ -1,0 +1,46 @@
+{
+    "general1": [
+        {
+            "value": "01",
+            "label": "值1"
+        },
+        {
+            "value": "02",
+            "label": "值2"
+        },
+        {
+            "value": "03",
+            "label": "值3",
+            "general2": [
+                {
+                    "value": "01",
+                    "label": "子值1"
+                },
+                {
+                    "value": "02",
+                    "label": "子值2"
+                },
+                {
+                    "value": "03",
+                    "label": "子值3"
+                },
+                {
+                    "value": "04",
+                    "label": "子值4"
+                },
+                {
+                    "value": "05",
+                    "label": "子值5"
+                }
+            ]
+        },
+        {
+            "value": "04",
+            "label": "值4"
+        },
+        {
+            "value": "05",
+            "label": "值5"
+        }
+    ]
+}

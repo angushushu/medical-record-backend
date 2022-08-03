@@ -44,7 +44,7 @@ class GStd(models.Model):
         RH = 'RH'
         RECORDQUALITY = 'RECORDQUALITY'
         OPLVL = 'OPLVL'
-        WOUNDHEALINGLVL = 'WOUNDHEALINGLVL'
+        # WOUNDHEALINGLVL = 'WOUNDHEALINGLVL' # should be 2 layers
         RELEASETYPE = 'RELEASETYPE'
     type = models.CharField(
         max_length=32,
@@ -62,6 +62,7 @@ class G2Std(models.Model):
     class Type(models.TextChoices):
         HEALTYPE = 'HEALTYPE'
         BLOODTYPE = 'BLOODTYPE'
+        WOUNDHEALINGLVL = 'WOUNDHEALINGLVL'
     type = models.CharField(
         max_length=32,
         choices=Type.choices,
@@ -114,7 +115,7 @@ class AppliedGStds(models.Model):
     rh_std = models.ForeignKey(GStd, related_name='applied_rh_std', on_delete=models.SET_NULL, null=True, blank=True)
     record_quality_std = models.ForeignKey(GStd, related_name='applied_record_quality_std', on_delete=models.SET_NULL, null=True, blank=True)
     op_lvl_std = models.ForeignKey(GStd, related_name='applied_op_lvl_std', on_delete=models.SET_NULL, null=True, blank=True)
-    wound_healing_lvl_std = models.ForeignKey(GStd, related_name='applied_wound_healing_lvl_std', on_delete=models.SET_NULL, null=True, blank=True)
+    # wound_healing_lvl_std = models.ForeignKey(GStd, related_name='applied_wound_healing_lvl_std', on_delete=models.SET_NULL, null=True, blank=True)
     release_type_std = models.ForeignKey(GStd, related_name='applied_release_type_std', on_delete=models.SET_NULL, null=True, blank=True)
     def save(self, *args, **kwargs):
         if not self.pk and AppliedGStds.objects.exists():
@@ -125,6 +126,7 @@ class AppliedGStds(models.Model):
 class AppliedG2Stds(models.Model):
     heal_type_std = models.ForeignKey(G2Std, related_name='applied_heal_type_std', on_delete=models.SET_NULL, null=True, blank=True)
     blood_type_std = models.ForeignKey(G2Std, related_name='applied_blood_type_std', on_delete=models.SET_NULL, null=True, blank=True)
+    wound_healing_lvl_std = models.ForeignKey(G2Std, related_name='applied_wound_healing_lvl_std', on_delete=models.SET_NULL, null=True, blank=True)
     def save(self, *args, **kwargs):
         if not self.pk and AppliedG2Stds.objects.exists():
             raise ValidationErr('There can only be one AppliedG2Std instance')

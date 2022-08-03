@@ -21,11 +21,11 @@ class General2Serializer(serializers.ModelSerializer):
         print('@General2.create()')
         g1_value = self.context.get("g1_value")
         if g1_value:
-            print('general1:', g1_value)
+            # print('general1:', g1_value)
             general1 = General1.objects.get(value=g1_value)
-        print('general1 obj:', general1)
+        # print('general1 obj:', general1)
         general2 = General2.objects.create(general1=general1, **validated_data)
-        print('general2 obj:', general1)
+        # print('general2 obj:', general1)
         return general2
 
 class General1Serializer(serializers.ModelSerializer):
@@ -62,11 +62,11 @@ class Specialty3Serializer(serializers.ModelSerializer):
     def create(self, validated_data):
         print('@Sp3.create()')
         sp2_value = self.context.get("sp2_value")
-        print('specialty2:', sp2_value)
+        # print('specialty2:', sp2_value)
         specialty2 = Specialty2.objects.get(value=sp2_value)
-        print('specialty2 obj:', specialty2)
+        # print('specialty2 obj:', specialty2)
         specialty3 = Specialty3.objects.create(specialty2=specialty2,**validated_data)
-        print('specialty3 obj:', specialty3)
+        # print('specialty3 obj:', specialty3)
         return specialty3
 
 class Specialty2Serializer(serializers.ModelSerializer):
@@ -83,11 +83,11 @@ class Specialty2Serializer(serializers.ModelSerializer):
         print('@Sp2.create()')
         sp1_value = self.context.get("sp1_value")
         if sp1_value:
-            print('specialty1:', sp1_value)
+            # print('specialty1:', sp1_value)
             specialty1 = Specialty1.objects.get(value=sp1_value)
-        print('specialty1 obj:', specialty1)
+        # print('specialty1 obj:', specialty1)
         specialty2 = Specialty2.objects.create(specialty1=specialty1,**validated_data)
-        print('specialty2 obj:', specialty2)
+        # print('specialty2 obj:', specialty2)
         return specialty2
     # def update():
     #     print('hushu is a shnooby')
@@ -148,7 +148,7 @@ class G2StdSerializer(serializers.ModelSerializer):
         if 'general1' in validated_data:
             g1s_data = validated_data.pop('general1')
         g2std = G2Std.objects.create(**validated_data)
-        print('g2std obj created:', g2std)
+        # print('g2std obj created:', g2std)
         if g1s_data:
             for g1_data in g1s_data:
                 g2s_data = None
@@ -163,18 +163,18 @@ class G2StdSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         print('@G2StdSerializer.update()')
         instance.name = validated_data.get('name', instance.name)
-        print('changing name to',validated_data['name'])
+        # print('changing name to',validated_data['name'])
         General1.objects.filter(g2std=instance).delete()
         g1s_data = None
         if 'general1' in validated_data:
             g1s_data = validated_data.pop('general1')
         if g1s_data:
             for g1_data in g1s_data:
-                print('g1_data:', g1_data)
+                # print('g1_data:', g1_data)
                 g2s_data = None
                 if 'general2' in g1_data:
                     g2s_data = g1_data.pop('general2')
-                    print('g1_data after pop:', g1_data)
+                    # print('g1_data after pop:', g1_data)
                 general1 = General1.objects.create(g2std=instance, **g1_data)
                 if g2s_data:
                     for g2_data in g2s_data:
@@ -200,7 +200,7 @@ class SpecialtyStdSerializer(serializers.ModelSerializer):
             sp1s_data = validated_data.pop('specialty1')
             # print(sp1s_data)
         specialtystd = SpecialtyStd.objects.create(**validated_data)
-        print('specialtystd obj created:', specialtystd)
+        # print('specialtystd obj created:', specialtystd)
         if sp1s_data:
             for sp1_data in sp1s_data:
                 # print('sp1_data:', sp1_data)
@@ -229,7 +229,7 @@ class SpecialtyStdSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         print('SpecialtyStdSerializer.update()')
         instance.name = validated_data.get('name', instance.name)
-        print('changing name to',validated_data['name'])
+        # print('changing name to',validated_data['name'])
         Specialty1.objects.filter(specialtystd=instance).delete()
         sp1s_data = None
         if 'specialty1' in validated_data:
@@ -237,11 +237,11 @@ class SpecialtyStdSerializer(serializers.ModelSerializer):
             # print(sp1s_data)
         if sp1s_data:
             for sp1_data in sp1s_data:
-                print('sp1_data:', sp1_data)
+                # print('sp1_data:', sp1_data)
                 sp2s_data = None
                 if 'specialty2' in sp1_data:
                     sp2s_data = sp1_data.pop('specialty2')
-                    print('sp1_data after pop:', sp1_data)
+                    # print('sp1_data after pop:', sp1_data)
                 specialty1 = Specialty1.objects.create(specialtystd=instance, **sp1_data)
                 # print('specialty1 obj created:', specialty1)
                 if sp2s_data:
@@ -272,14 +272,14 @@ class DiagSerializer(serializers.ModelSerializer):
         )
     def create(self, validated_data):
         print('@Diag.create()')
-        print(validated_data)
+        # print(validated_data)
         diag_code = validated_data['code']
-        print('diag:', diag_code)
+        # print('diag:', diag_code)
         existed = Diag.objects.filter(code__exact=diag_code) # 存在的
         if len(existed)>0:
             return existed[0]
         diag = Diag.objects.create(**validated_data)
-        print('diag obj created:', diag)
+        # print('diag obj created:', diag)
                 
         return diag
     
@@ -295,27 +295,27 @@ class DiagStdSerializer(serializers.ModelSerializer):
         )
     def create(self, validated_data):
         print('@DiagStd.create()')
-        print(validated_data)
+        # print(validated_data)
         diags_data = None
         if 'diag' in validated_data:
             diags_data = validated_data.pop('diag')
         dgstd = DiagStd.objects.create(**validated_data)
-        print('dgstd obj created:', dgstd)
+        # print('dgstd obj created:', dgstd)
         if diags_data:
             for diag_data in diags_data:
-                print('diag_data:', diag_data)
+                # print('diag_data:', diag_data)
                 Diag.objects.create(diagstd=dgstd, **diag_data)
         return dgstd
     
     def update(self, instance, validated_data):
         print('@DiagStdSerializer.update()')
         instance.name = validated_data.get('name', instance.name)
-        print('changing name to',validated_data['name'])
+        # print('changing name to',validated_data['name'])
         Diag.objects.filter(diagstd=instance).delete()
         if 'diag' in validated_data:
             diags_data = validated_data.pop('diag')
             for diag_data in diags_data:
-                print('diag_data:', diag_data)
+                # print('diag_data:', diag_data)
                 Diag.objects.create(diagstd=instance, **diag_data)
         instance.save()
         return instance
@@ -329,14 +329,14 @@ class GeneralSerializer(serializers.ModelSerializer):
         )
     def create(self, validated_data):
         print('@GeneralSerializer.create()')
-        print(validated_data)
+        # print(validated_data)
         code = validated_data['code']
-        print('general:', code)
+        # print('general:', code)
         existed = General.objects.filter(code__exact=code) # 存在的
         if len(existed)>0:
             return existed[0]
         general = General.objects.create(**validated_data)
-        print('general obj created:', general)
+        # print('general obj created:', general)
                 
         return general
 
@@ -354,28 +354,28 @@ class GStdSerializer(serializers.ModelSerializer):
         )
     def create(self, validated_data):
         print('@GeneralStdSerializer.create()')
-        print(validated_data)
+        # print(validated_data)
         generals_data = None
         if 'general' in validated_data:
             generals_data = validated_data.pop('general')
             print('generals_data:',generals_data)
         gstd = GStd.objects.create(**validated_data)
-        print('gstd obj created:', gstd)
+        # print('gstd obj created:', gstd)
         if generals_data:
             for general_data in generals_data:
-                print('general_data:', general_data)
+                # print('general_data:', general_data)
                 General.objects.create(gstd=gstd, **general_data)
         return gstd
     
     def update(self, instance, validated_data):
         print('@GeneralStdSerializer.update()')
         instance.name = validated_data.get('name', instance.name)
-        print('changing name to',validated_data['name'])
+        # print('changing name to',validated_data['name'])
         General.objects.filter(gstd=instance).delete()
         if 'general' in validated_data:
             generals_data = validated_data.pop('general')
             for general_data in generals_data:
-                print('general_data:', general_data)
+                # print('general_data:', general_data)
                 General.objects.create(gstd=instance, **general_data)
         instance.save()
         return instance

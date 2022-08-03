@@ -6,6 +6,10 @@ from rest_framework import serializers
 from .models import Charge, Homepage, MainDiag, OtherDiag, Op, LesionReason, Pathology, PostAdmitComa, PreAdmitComa
 
 class MainDiagSerializer(serializers.ModelSerializer):
+    # 
+    release = serializers.ListField(
+        child = serializers.CharField()
+    )
     class Meta:
         model = MainDiag
         fields = (
@@ -21,6 +25,9 @@ class LesionReasonSerializer(serializers.ModelSerializer):
             'code',
         )
 class PathologySerializer(serializers.ModelSerializer):
+    description = serializers.ListField(
+        child = serializers.CharField()
+    )
     class Meta:
         model = Pathology
         fields = (
@@ -45,6 +52,10 @@ class PostAdmitComaSerializer(serializers.ModelSerializer):
             'mins',
         )
 class OtherDiagSerializer(serializers.ModelSerializer):
+    # 
+    release = serializers.ListField(
+        child = serializers.CharField()
+    )
     class Meta:
         model = OtherDiag
         fields = (
@@ -141,6 +152,10 @@ class HomepageSerializer(serializers.ModelSerializer):
         child = serializers.CharField()
     )
     contact_addr1 = serializers.ListField(
+        child = serializers.CharField()
+    )
+    # 
+    diagnosis = serializers.ListField(
         child = serializers.CharField()
     )
     class Meta:

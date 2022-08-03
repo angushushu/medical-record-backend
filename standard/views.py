@@ -38,12 +38,12 @@ class UploadXlsViewSet(ModelViewSet):
         file_dir = None
         print('UploadViewSet.create()')
         upload_serializer = UploadSerializer(data=request.data)
-        print('validation:', upload_serializer.is_valid())
+        # print('validation:', upload_serializer.is_valid())
         if(upload_serializer.is_valid()):
             upload = upload_serializer.save()
         file_name = str(upload.file).split('/')[1]
         file_dir = str(settings.MEDIA_ROOT)+'\\uploads\\'+file_name
-        print('file_dir:', file_dir)
+        # print('file_dir:', file_dir)
 
         output = dict(name = file_name, specialty1 = [])
 
@@ -52,7 +52,7 @@ class UploadXlsViewSet(ModelViewSet):
             # xlrd.Book.encoding = "gbk"
             file = xlrd.open_workbook(file_dir)
             sheet = file.sheets()[0]
-            print(sheet)
+            # print(sheet)
             print(sheet.nrows)
             for i in range(1,sheet.nrows):
                 val = str(sheet.cell_value(i,0)).strip(' ')
@@ -170,7 +170,7 @@ class UploadDgXlsViewSet(ModelViewSet):
         file_dir = None
         print('UploadDgXlsViewSet.create()')
         upload_serializer = UploadSerializer(data=request.data)
-        print('validation:', upload_serializer.is_valid())
+        # print('validation:', upload_serializer.is_valid())
         if(upload_serializer.is_valid()):
             upload = upload_serializer.save()
         file_name = str(upload.file).split('/')[1]
@@ -274,7 +274,7 @@ def getXlsExample(request):
     file=open(str(settings.MEDIA_ROOT)+'\\examples\\example.xls','rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment; filename="exaple.xls"'
+    response['Content-Disposition'] = 'attachment; filename="example.xls"'
     return response
 
 @api_view(['GET'])
@@ -298,12 +298,60 @@ def getDgXlsExample(request):
     file=open(str(settings.MEDIA_ROOT)+'\\examples\\dg_example.xls','rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment; filename="exaple.xls"'
+    response['Content-Disposition'] = 'attachment; filename="example.xls"'
     return response
 
 @api_view(['GET'])
 def getDgXlsxExample(request):
     file=open(str(settings.MEDIA_ROOT)+'\\examples\\dg_example.xlsx','rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment; filename="example.xlsx"'
+    return response
+
+@api_view(['GET'])
+def getGJsonExample(request):
+    file=open(str(settings.MEDIA_ROOT)+'\\examples\\g_example.json','rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['COntent-Disposition'] = 'attachment; filename="example.json"'
+    return response
+
+@api_view(['GET'])
+def getGXlsExample(request):
+    file=open(str(settings.MEDIA_ROOT)+'\\examples\\g_example.xls','rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment; filename="example.xls"'
+    return response
+
+@api_view(['GET'])
+def getGXlsxExample(request):
+    file=open(str(settings.MEDIA_ROOT)+'\\examples\\g_example.xlsx','rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment; filename="example.xlsx"'
+    return response
+
+@api_view(['GET'])
+def getG2JsonExample(request):
+    file=open(str(settings.MEDIA_ROOT)+'\\examples\\g2_example.json','rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['COntent-Disposition'] = 'attachment; filename="example.json"'
+    return response
+
+@api_view(['GET'])
+def getG2XlsExample(request):
+    file=open(str(settings.MEDIA_ROOT)+'\\examples\\g2_example.xls','rb')
+    response = FileResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment; filename="example.xls"'
+    return response
+
+@api_view(['GET'])
+def getG2XlsxExample(request):
+    file=open(str(settings.MEDIA_ROOT)+'\\examples\\g2_example.xlsx','rb')
     response = FileResponse(file)
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = 'attachment; filename="example.xlsx"'
@@ -709,8 +757,8 @@ def getAppliedGStd(request):
             applied_gstd = AppliedGStds.objects.create(record_quality_std=gstd)
         elif type == 'OPLVL':
             applied_gstd = AppliedGStds.objects.create(op_lvl_std=gstd)
-        elif type == 'WOUNDHEALINGLVL':
-            applied_gstd = AppliedGStds.objects.create(wound_healing_lvl_std=gstd)
+        # elif type == 'WOUNDHEALINGLVL':
+        #     applied_gstd = AppliedGStds.objects.create(wound_healing_lvl_std=gstd)
         elif type == 'RELEASETYPE':
             applied_gstd = AppliedGStds.objects.create(release_type_std=gstd)
         print('test')
@@ -786,9 +834,9 @@ def getAppliedGStd(request):
         elif type == 'OPLVL':
             if not applied_gstd.op_lvl_std:
                 applied_gstd.op_lvl_std = gstd
-        elif type == 'WOUNDHEALINGLVL':
-            if not applied_gstd.wound_healing_lvl_std:
-                applied_gstd.wound_healing_lvl_std = gstd
+        # elif type == 'WOUNDHEALINGLVL':
+        #     if not applied_gstd.wound_healing_lvl_std:
+        #         applied_gstd.wound_healing_lvl_std = gstd
         elif type == 'RELEASETYPE':
             if not applied_gstd.release_type_std:
                 applied_gstd.release_type_std = gstd
@@ -840,8 +888,8 @@ def getAppliedGStd(request):
         response = GStdSerializer(applied_gstd.record_quality_std)
     elif type == 'OPLVL':
         response = GStdSerializer(applied_gstd.op_lvl_std)
-    elif type == 'WOUNDHEALINGLVL':
-        response = GStdSerializer(applied_gstd.wound_healing_lvl_std)
+    # elif type == 'WOUNDHEALINGLVL':
+    #     response = GStdSerializer(applied_gstd.wound_healing_lvl_std)
     elif type == 'RELEASETYPE':
         response = GStdSerializer(applied_gstd.release_type_std)
     print(response.data)
@@ -913,7 +961,7 @@ def getAppliedGStds(request):
     stds['RH'] = applied_gstds.rh_std.id if applied_gstds.rh_std else None
     stds['RECORDQUALITY'] = applied_gstds.record_quality_std.id if applied_gstds.record_quality_std else None
     stds['OPLVL'] = applied_gstds.op_lvl_std.id if applied_gstds.op_lvl_std else None
-    stds['WOUNDHEALINGLVL'] = applied_gstds.wound_healing_lvl_std.id if applied_gstds.wound_healing_lvl_std else None
+    # stds['WOUNDHEALINGLVL'] = applied_gstds.wound_healing_lvl_std.id if applied_gstds.wound_healing_lvl_std else None
     stds['RELEASETYPE'] = applied_gstds.release_type_std.id if applied_gstds.release_type_std else None
     # 添加type->中文的对照，用于前端显示
 
@@ -983,8 +1031,8 @@ def setAppliedGStd(request, format=None):
         applied_gstd.record_quality_std = gstd
     elif type == 'OPLVL':
         applied_gstd.op_lvl_std = gstd
-    elif type == 'WOUNDHEALINGLVL':
-        applied_gstd.wound_healing_lvl_std = gstd
+    # elif type == 'WOUNDHEALINGLVL':
+    #     applied_gstd.wound_healing_lvl_std = gstd
     elif type == 'RELEASETYPE':
         applied_gstd.release_type_std = gstd
     applied_gstd.save()
@@ -1073,9 +1121,9 @@ class AllGStdList(APIView):
     def get(self, request, format=None):
         print('@getNoTypeGStdList()')
         gstd_list = GStd.objects.all()
-        print(gstd_list)
+        # print(gstd_list)
         serializer = GStdSerializer(gstd_list, many=True)
-        print(serializer.data)
+        # print(serializer.data)
         return Response({'gstd_list':serializer.data})
 
 @api_view(['POST'])
@@ -1109,7 +1157,7 @@ class UploadGXlsViewSet(ModelViewSet):
         print('file_name:', file_name)
         file_dir = str(settings.MEDIA_ROOT)+'\\uploads\\'+file_name
         print('file_dir:', file_dir)
-        output = dict(name=file_name, general=[],type=type)
+        output = dict(name=file_name,general=[],type=type)
         file_type = file_name.split('.')[1]
         print('file_type:',file_type)
         if(file_type=='xls'):
@@ -1166,7 +1214,7 @@ class UploadGJsonViewSet(ModelViewSet):
         with open(file_dir, encoding = 'utf-8') as f:
             json_str = json.load(f)
         if json_str:
-            json_str['general'] = json_str[type.lower()]
+            # json_str['general'] = json_str[type.lower()]
             json_str['name'] = file_name
             json_str['type'] = type
             gstd_serializer = GStdSerializer(data=json_str)
@@ -1196,6 +1244,8 @@ def getAppliedG2Std(request):
             applied_g2std = AppliedG2Stds.objects.create(heal_type_std=g2std)
         elif type == 'BLOODTYPE':
             applied_g2std = AppliedG2Stds.objects.create(blood_type_std=g2std)
+        elif type == 'WOUNDHEALINGLVL':
+            applied_g2std = AppliedG2Stds.objects.create(wound_healing_lvl_std=g2std)
     else:
         applied_g2std = AppliedG2Stds.objects.get()
         if type == 'HEALTYPE':
@@ -1204,11 +1254,16 @@ def getAppliedG2Std(request):
         elif type == 'BLOODTYPE':
             if not applied_g2std.blood_type_std:
                 applied_g2std.blood_type_std = g2std
+        elif type == 'WOUNDHEALINGLVL':
+            if not applied_g2std.wound_healing_lvl_std:
+                applied_g2std.wound_healing_lvl_std = g2std
     print('applied_g2std got:',applied_g2std)
     if type == 'HEALTYPE':
         response = G2StdSerializer(applied_g2std.heal_type_std)
     elif type == 'BLOODTYPE':
         response = G2StdSerializer(applied_g2std.blood_type_std)
+    elif type == 'WOUNDHEALINGLVL':
+        response = G2StdSerializer(applied_g2std.wound_healing_lvl_std)
     print(response.data)
     general1s = response.data['general1']
     id = response.data['id']
@@ -1227,6 +1282,7 @@ def getAppliedG2Stds(request):
     stds = dict()
     stds['HEALTYPE'] = applied_g2stds.heal_type_std.id if applied_g2stds.heal_type_std else None
     stds['BLOODTYPE'] = applied_g2stds.blood_type_std.id if applied_g2stds.blood_type_std else None
+    stds['WOUNDHEALINGLVL'] = applied_g2stds.wound_healing_lvl_std.id if applied_g2stds.wound_healing_lvl_std else None
     response = dict()
     response['standards'] = stds
     response['names'] = names
@@ -1250,6 +1306,8 @@ def setAppliedG2Std(request, format=None):
         applied_g2std.heal_type_std = g2std
     elif type == 'BLOODTYPE':
         applied_g2std.blood_type_std = g2std
+    elif type == 'WOUNDHEALINGLVL':
+        applied_g2std.wound_healing_lvl_std = g2std
     applied_g2std.save()
     print('applied_g2std got:',applied_g2std)
     response = G2StdSerializer(g2std)
@@ -1298,6 +1356,7 @@ class ViewG2Std(APIView):
         id = request.GET.get('id')
         print('g2std w/ id:', id)
         stand = G2Std.objects.get(id__exact=id)
+        print('stand:',stand)
         print(stand.id)
         serializer = G2StdSerializer(stand, many=False)
         response = dict()
@@ -1321,9 +1380,9 @@ class AllG2StdList(APIView):
     def get(self, request, format=None):
         print('@getNoTypeG2StdList()')
         g2std_list = G2Std.objects.all()
-        print(g2std_list)
+        # print(g2std_list)
         serializer = G2StdSerializer(g2std_list, many=True)
-        print(serializer.data)
+        # print(serializer.data)
         return Response({'g2std_list':serializer.data})
 
 @api_view(['POST'])
@@ -1331,11 +1390,124 @@ def removeG2Std(request):
     id = request.data['id']
     print('id', id)
     instance = G2Std.objects.get(id__exact=id)
-    print('instance',instance)
+    # print('instance',instance)
     if instance:
-        print(instance)
+        # print(instance)
         instance.delete()
         print('deleted')
         return Response({"result":str(id)+" removed"})
     else:
         return Response({"result":"something went wrong"})
+
+class UploadG2XlsViewSet(ModelViewSet):
+    queryset = UploadModel.objects.all()
+    def create(self, request):
+        type = request.data['type']
+        file_dir = None
+        print('UploadG2ViewSet.create()')
+        upload_serializer = UploadSerializer(data=request.data)
+        print('validation:', upload_serializer.is_valid())
+        if(upload_serializer.is_valid()):
+            upload = upload_serializer.save()
+        file_name = str(upload.file).split('/')[1]
+        file_dir = str(settings.MEDIA_ROOT)+'\\uploads\\'+file_name
+        print('file_dir:', file_dir)
+
+        output = dict(name=file_name,general1=[],type=type)
+
+        file_type = file_name.split('.')[1]
+        if(file_type=='xls'):
+            # xlrd.Book.encoding = "gbk"
+            file = xlrd.open_workbook(file_dir)
+            sheet = file.sheets()[0]
+            # print(sheet)
+            # print(sheet.nrows)
+            for i in range(1,sheet.nrows):
+                val = str(sheet.cell_value(i,0)).strip(' ')
+                label = sheet.cell_value(i,1).strip(' ')
+                print(val+' -- '+label+'     >> '+str(len(val)))
+                vals = val.split('.')
+                if len(vals)==1:
+                    temp = dict(value = vals[0], label=label)
+                    output['general1'].append(temp)
+                elif len(vals)==2:
+                    father_val = vals[0]
+                    temp_val = vals[1]
+                    temp = dict(value = temp_val, label = label)
+                    for g1 in output['general1']:
+                        if g1['value'] == father_val:
+                            if 'general2' not in g1:
+                                g1['general2'] = []
+                            g1['general2'].append(temp)
+        elif(file_type=='xlsx'):
+            file = openpyxl.load_workbook(file_dir)
+            sheets = file.sheetnames
+            sheet = file[sheets[0]]
+            print('max_row:',sheet.max_row)
+            for i in range(2,sheet.max_row + 1):
+                if sheet.cell(column=1, row=i).value==None or sheet.cell(column=2, row=i).value==None:
+                    continue
+                val = str(sheet.cell(column=1, row=i).value).strip(' ')
+                label = sheet.cell(column=2, row=i).value.strip(' ')
+                vals = val.split('.')
+                print(val+' -- '+label+'     >> '+str(len(val)))
+                if len(vals)==1:
+                    temp = dict(value = vals[0], label=label)
+                    output['general1'].append(temp)
+                elif len(vals)==2:
+                    father_val = vals[0]
+                    temp_val = vals[1]
+                    temp = dict(value = temp_val, label = label)
+                    for g1 in output['general1']:
+                        if g1['value'] == father_val:
+                            if 'general2' not in g1:
+                                g1['general2'] = []
+                            g1['general2'].append(temp)
+        else:
+            return Response("有问题啊")
+
+        # print(output)
+        g2std_serializer = G2StdSerializer(data=output)
+        # print('validation:', g2std_serializer.is_valid())
+        if g2std_serializer.is_valid():
+            g2std_serializer.save()
+        else:
+            print(g2std_serializer.errors)
+        print('giao')
+        response = "POST API: 你一上传了一个文件:{}".format(file_name)
+        return Response(response)
+
+class UploadG2JsonViewSet(ModelViewSet):
+    queryset = UploadModel.objects.all()
+    def create(self, request):
+        file_dir = None # 文件存储路径
+        json_str = None # 读取的json
+        type = request.data['type']
+        print('UploadJsonViewSet.create()')
+        upload_serializer = UploadSerializer(data=request.data)
+        print('validation:', upload_serializer.is_valid())
+        if(upload_serializer.is_valid()):
+            upload = upload_serializer.save()
+        file_name = str(upload.file).split('/')[1]
+        file_dir = str(settings.MEDIA_ROOT)+'\\uploads\\'+file_name
+        # print('file_dir:', file_dir)
+        # 打开json文件
+        json_str = None
+        with open(file_dir, encoding = 'utf-8') as f:
+            json_str = json.load(f)
+        if json_str:
+            json_str['name'] = file_name
+            json_str['type'] = type
+            # print(json_str)
+            g2std_serializer = G2StdSerializer(data=json_str)
+            print('validation:', g2std_serializer.is_valid())
+            if g2std_serializer.is_valid():
+                g2std_serializer.save()
+            else:
+                print(g2std_serializer.errors)
+            print('giao')
+        response = "POST API: 你一上传了一个文件:{}".format(file_name)
+
+        # 砖码并录入
+
+        return Response(response)

@@ -14,6 +14,8 @@ router.register(r'upload-std/json-dg', views.UploadDgJsonViewSet, basename='uplo
 router.register(r'upload-std/xls-dg', views.UploadDgXlsViewSet, basename='upload-xls-dg')
 router.register(r'upload-std/json-g', views.UploadGJsonViewSet, basename='upload-json-g')
 router.register(r'upload-std/xls-g', views.UploadGXlsViewSet, basename='upload-xls-g')
+router.register(r'upload-std/json-g2', views.UploadG2JsonViewSet, basename='upload-json-g2')
+router.register(r'upload-std/xls-g2', views.UploadG2XlsViewSet, basename='upload-xls-g2')
 
 urlpatterns = [
     # path('get-standards/', views.StandardList.as_view()),
@@ -26,6 +28,12 @@ urlpatterns = [
     path('upload-std/dg-json-example', views.getDgJsonExample),
     path('upload-std/dg-xls-example', views.getDgXlsExample),
     path('upload-std/dg-xlsx-example', views.getDgXlsxExample),
+    path('upload-std/g-json-example', views.getGJsonExample),
+    path('upload-std/g-xls-example', views.getGXlsExample),
+    path('upload-std/g-xlsx-example', views.getGXlsxExample),
+    path('upload-std/g2-json-example', views.getG2JsonExample),
+    path('upload-std/g2-xls-example', views.getG2XlsExample),
+    path('upload-std/g2-xlsx-example', views.getG2XlsxExample),
     path('get-standard/specialty/', views.getAppliedSpStd),
     path('set-standard/specialty/', views.setAppliedSpStd),
     path('post-standard/specialty/', views.postSpecialtyStd),

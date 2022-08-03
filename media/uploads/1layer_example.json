@@ -1,0 +1,9 @@
+{
+  "general": [
+    { "code": "0", "label": "值1" },
+    { "code": "1", "label": "值2" },
+    { "code": "3", "label": "值3" },
+    { "code": "4", "label": "值4" },
+    { "code": "5", "label": "值5" }
+  ]
+}
