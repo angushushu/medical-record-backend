@@ -375,12 +375,12 @@ class SettlementSerializer(serializers.ModelSerializer):
     release_specialty = serializers.ListField(
         child = serializers.CharField()
     )
-    w_emergency_diag = serializers.ListField(
-        child = serializers.CharField()
-    )
-    t_emergency_diag = serializers.ListField(
-        child = serializers.CharField()
-    )
+    # w_emergency_diag = serializers.ListField(
+    #     child = serializers.CharField()
+    # )
+    # t_emergency_diag = serializers.ListField(
+    #     child = serializers.CharField()
+    # )
     settle_duration = serializers.ListField(
         child = serializers.CharField()
     )

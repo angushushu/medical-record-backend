@@ -100,16 +100,18 @@ class Settlement(models.Model):
         default=None,
     )
     hosp_duration = models.IntegerField(default=0, blank=True)
-    w_emergency_diag = ListCharField(
-        base_field=models.CharField(max_length=64, blank=True, default=None),
-        max_length=(50 * 65), # 是否应用listcharfield，将有数量限制
-        default=None,
-    )
-    t_emergency_diag = ListCharField(
-        base_field=models.CharField(max_length=64, blank=True, default=None),
-        max_length=(50 * 65), # 是否应用listcharfield，将有数量限制
-        default=None,
-    )
+    # w_emergency_diag = ListCharField(
+    #     base_field=models.CharField(max_length=64, blank=True, default=None),
+    #     max_length=(50 * 65), # 是否应用listcharfield，将有数量限制
+    #     default=None,
+    # )
+    w_emergency_diag = models.CharField(max_length=64, blank=True)
+    # t_emergency_diag = ListCharField(
+    #     base_field=models.CharField(max_length=64, blank=True, default=None),
+    #     max_length=(50 * 65), # 是否应用listcharfield，将有数量限制
+    #     default=None,
+    # )
+    t_emergency_diag = models.CharField(max_length=64, blank=True)
     w_disease_code = models.CharField(max_length=20, blank=True)
     t_disease_code = models.CharField(max_length=20, blank=True)
     # western release
@@ -280,25 +282,25 @@ class TraditionalRelease(models.Model):
     settlement = models.OneToOneField(Settlement, related_name='traditional_release', on_delete=models.CASCADE)
 
 class MainDiag(models.Model): # 赋予WesternRelease
-    diag = models.CharField(max_length=20, default='', blank=True)
+    diag = models.CharField(max_length=64, default='', blank=True)
     disease_code = models.CharField(max_length=20, default='', blank=True)
     admit_condition = models.CharField(max_length=20, default='', blank=True)
     # western_release = models.ForeignKey(WesternRelease, related_name='main_diag', on_delete=models.CASCADE)
     western_release = models.OneToOneField(WesternRelease, related_name='main_diag', on_delete=models.CASCADE)
 class OtherDiag(models.Model):
-    diag = models.CharField(max_length=20, default='', blank=True)
+    diag = models.CharField(max_length=64, default='', blank=True)
     disease_code = models.CharField(max_length=20, default='', blank=True)
     admit_condition = models.CharField(max_length=20, default='', blank=True)
     western_release = models.ForeignKey(WesternRelease, related_name='other_diags', on_delete=models.CASCADE)
 
 class MainDisease(models.Model):
-    diag = models.CharField(max_length=20, default='', blank=True)
+    diag = models.CharField(max_length=64, default='', blank=True)
     disease_code = models.CharField(max_length=20, default='', blank=True)
     admit_condition = models.CharField(max_length=20, default='', blank=True)
     # traditional_release = models.ForeignKey(TraditionalRelease, related_name='main_disease', on_delete=models.CASCADE)
     traditional_release = models.OneToOneField(TraditionalRelease, related_name='main_disease', on_delete=models.CASCADE)
 class MainSymp(models.Model):
-    diag = models.CharField(max_length=20, default='', blank=True)
+    diag = models.CharField(max_length=64, default='', blank=True)
     disease_code = models.CharField(max_length=20, default='', blank=True)
     admit_condition = models.CharField(max_length=20, default='', blank=True)
     traditional_release = models.ForeignKey(TraditionalRelease, related_name='main_symps', on_delete=models.CASCADE)
