@@ -1,4 +1,4 @@
-# 诊断录入&标准编辑-后端
+#  病案首页&标准编辑-后端
 
 pip install -r requirements.txt
 
@@ -12,3 +12,5 @@ python migrate
 python manage.py runserver
 
 标准文件例子见/media/examples目录
+
+(前端)[https://github.com/angushushu/medical-record-frontend]
