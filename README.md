@@ -2,8 +2,13 @@
 
 pip install -r requirements.txt
 
-[install django](https://docs.djangoproject.com/en/4.0/topics/install/)
+启动MySql (在proj_django/settings.py中配置)
 
-start MySql (config in proj_django/settings.py)
+在MySql中创建数据库 create database test (test为数据库名，可在settings.py中修改)
 
+删除所有文件夹中的migrations文件夹（如果有的话）
+python makemigrations
+python migrate
 python manage.py runserver
+
+标准文件例子见/media/examples目录
