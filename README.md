@@ -13,4 +13,4 @@ python manage.py runserver
 
 标准文件例子见/media/examples目录
 
-(前端)[https://github.com/angushushu/medical-record-frontend]
+[前端](https://github.com/angushushu/medical-record-frontend)
